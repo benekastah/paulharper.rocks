@@ -32,16 +32,29 @@ ul, ol {
   padding: 0;
 }
 
-*.flex {
+.flex {
   display: flex;
 }
 
-*.flex *, *.flex-shrink {
+.flex *, .flex-shrink {
   flex: 0 1 auto;
 }
 
-*.flex-grow {
+.flex-grow {
   flex: 1 0 auto;
+}
+
+.clear-right {
+  clear: right;
+}
+
+.clear-left {
+  clear: left;
+}
+
+.hero-image {
+  float: right;
+  height: 350px;
 }
 
 .song {
