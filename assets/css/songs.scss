@@ -10,8 +10,8 @@ ul.songs, ul.links {
 .song {
   background-color: #eee;
   padding: 5px;
-  margin-bottom: 5px;
   border-radius: 5px;
+  margin-bottom: 15px;
 
   header {
     height: 35px;
@@ -20,7 +20,7 @@ ul.songs, ul.links {
     margin-bottom: 5px;
     padding-bottom: 5px;
 
-    *:first-child {
+    :first-child {
       flex: 1 0 auto;
     }
 

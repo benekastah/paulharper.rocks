@@ -40,6 +40,8 @@ layout: home
 
 ## Mixing
 
+**Special: new clients get first mix free!**
+
 $300 to mix a song. 3 revisions included, more can be negotiated if needed.
 
 ## Mastering
@@ -48,4 +50,4 @@ $30 to master a song. 3 revisions included, more can be negotiated if needed.
 
 ## Producing & Recording
 
-Contact me for pricing.
+[Contact me](mailto:{{ site.email }}) for pricing information.
