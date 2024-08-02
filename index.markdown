@@ -38,6 +38,8 @@ layout: home
 
 # Services & Pricing
 
+[Contact me](mailto:{{ site.email }}) to inquire about my services or if you have any other questions. I'd love to hear from you!
+
 ## Mixing
 
 **Special: new clients get first mix free!**
