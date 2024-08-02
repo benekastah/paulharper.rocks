@@ -5,6 +5,7 @@ permalink: /about/
 ---
 
 <link rel="stylesheet" href="{{ '/assets/css/about.css' | relative_url }}" />
+
 <img class="hero-image" src="{{ '/assets/img/paul_guitar.jpg' | relative_url}}" />
 
 I've always loved music, and from a young age I wanted to make my own. At age 12 I got my first guitar and I've been loving

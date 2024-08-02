@@ -1,7 +1,18 @@
 ---
 ---
 
-.hero-image {
-  float: right;
-  width: 350px;
+@media (width >= 495px) {
+  .hero-image {
+    float: right;
+    width: 250px;
+    margin: 0 0 10px 10px;
+  }
+}
+
+@media (width >= 655px) {
+  .hero-image {
+    float: right;
+    width: 350px;
+    margin: 0 0 10px 10px;
+  }
 }
