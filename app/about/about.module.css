@@ -1,0 +1,16 @@
+
+@media (width >= 495px) {
+  .heroImage {
+    float: right;
+    width: 250px;
+    margin: 0 0 10px 10px;
+  }
+}
+
+@media (width >= 655px) {
+  .heroImage {
+    float: right;
+    width: 350px;
+    margin: 0 0 10px 10px;
+  }
+}
