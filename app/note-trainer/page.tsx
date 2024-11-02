@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback } from "react";
-import { Accidental, allAccidentals, getRandomNote } from "./Note";
+import { Accidental, getAccidentalByName, getRandomNote, Note } from "./Note";
 import RandomTrainer from "./RandomTrainer";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { ChordType, getRandomChord } from "./Chord";
+import { Chord, ChordType, getChordTypeByName, getRandomChord } from "./Chord";
 import styles from "./noteTrainer.module.css";
 import { MetronomeConfig } from "./MetronomeConfig";
+import { DoublyLinkedList } from "./DoublyLinkedList";
+import NoteCircle from "./NoteCircle";
 
 function getDefaultEnabledAccidentals(): Record<Accidental, boolean> {
   return {
@@ -65,10 +67,12 @@ export default function Page() {
             <h3>Accidentals</h3>
             <div className="flex">
               {Object.keys(Accidental).map((name) => {
+                const accidental = getAccidentalByName(name);
+                if (accidental === null) return null;
                 return <div key={name} className="mr-2">
                   <label>
                     {name}&nbsp;
-                    <input type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[Accidental[name]]} onChange={(ev) => onAccidentalEnabledChange(ev, Accidental[name])} />
+                    <input type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[accidental]} onChange={(ev) => onAccidentalEnabledChange(ev, accidental)} />
                   </label>
                 </div>;
               })}
@@ -83,14 +87,16 @@ export default function Page() {
             <div>
               <h3>Chords</h3>
               <div className="flex">
-                {Object.keys(ChordType).map((name) =>
-                  <div key={name} className="mr-2">
+                {Object.keys(ChordType).map((name) => {
+                  const chordType = getChordTypeByName(name);
+                  if (chordType === null) return null;
+                  return <div key={name} className="mr-2">
                     <label>
                       {name}&nbsp;
-                      <input type="checkbox" name="chords" value={name} checked={enabledChords[ChordType[name]]} onChange={(ev) => onChordEnabledChange(ev, ChordType[name])} />
+                      <input type="checkbox" name="chords" value={name} checked={enabledChords[chordType]} onChange={(ev) => onChordEnabledChange(ev, chordType)} />
                     </label>
                   </div>
-                )}
+                })}
               </div>
             </div> : null}
         </div>
@@ -98,7 +104,9 @@ export default function Page() {
         <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
       </div>
 
-      <RandomTrainer generator={generator} beats={beats} bpm={bpm} />
+      <RandomTrainer generator={generator} beats={beats} bpm={bpm} renderItem={(note: DoublyLinkedList<Note | Chord>, index: number) =>
+        <NoteCircle key={note.id} note={note.item} index={index} />
+      } />
     </section>
   </div>;
 }

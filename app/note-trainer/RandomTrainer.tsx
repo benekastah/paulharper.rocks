@@ -1,20 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import Metronome from "./Metronome";
 import Transport from "./Transport";
 import NoteCircle from "./NoteCircle";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 import * as linkedList from "./DoublyLinkedList"
 import styles from "./noteTrainer.module.css";
-import { MetronomeConfig } from "./MetronomeConfig";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 type Props<T> = {
     generator: () => T
     beats: number,
     bpm: number,
+    renderItem: (item: DoublyLinkedList<T>, index: number) => ReactElement
 };
 
-export default function RandomTrainer<T>({ generator, beats, bpm }: Props<T>) {
+export default function RandomTrainer<T>({ generator, beats, bpm, renderItem }: Props<T>) {
     const [play, setPlay] = useState(false);
 
     const initializeNotes = useCallback((notes: DoublyLinkedList<T> | null): DoublyLinkedList<T> => {
@@ -96,7 +95,7 @@ export default function RandomTrainer<T>({ generator, beats, bpm }: Props<T>) {
     return (
         <div className={styles.randomTrainer}>
             <section className={styles.noteCircles}>
-                {currentNotes.map((note, i) => <NoteCircle key={note.id} note={note.item} index={i} />)}
+                {currentNotes.map((note, i) => renderItem(note, i))}
             </section>
             <p>
                 Beat {halfBeat >= 0 ? (halfBeat / 2) + 1 : 1}

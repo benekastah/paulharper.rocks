@@ -6,6 +6,14 @@ export enum ChordType {
     Minor = "m",
 }
 
+export function getChordTypeByName(name: string): ChordType | null {
+    switch (name) {
+        case "Major": return ChordType.Major;
+        case "Minor": return ChordType.Minor;
+    }
+    return null;
+}
+
 export class Chord {
     root: Note;
     chordType: ChordType;

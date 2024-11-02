@@ -19,7 +19,7 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
 
     useEffect(() => {
         if (audioContext.current === null) {
-            audioContext.current = new (window.AudioContext || window.webkitAudioContext);
+            audioContext.current = new (window.AudioContext || eval('window.webkitAudioContext'));
         }
         const ctx = audioContext.current;
 

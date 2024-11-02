@@ -70,7 +70,7 @@ export default function Home() {
         <h2>Services & Pricing</h2>
 
         <p><a href={`mailto:${EMAIL_ADDRESS}`}>Contact me</a> to inquire about
-        my services or if you have any other questions. I'd love to hear from
+        my services or if you have any other questions. I&apos;d love to hear from
         you!</p>
 
         <h3>Mixing</h3>
