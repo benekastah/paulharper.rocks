@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import useAudioContext from "../hooks/useAudioContext";
+import { useEffect, useRef } from "react";
+import {Howl, Howler} from 'howler';
 
 type Props = {
     play: boolean,
@@ -10,50 +10,26 @@ type Props = {
 
 
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
-    const audioContext = useAudioContext();
-    const clickHi = useRef<HTMLAudioElement | null>(null);
-    const clickLo = useRef<HTMLAudioElement | null>(null);
-    const trackHi = useRef<MediaElementAudioSourceNode | null>(null);
-    const trackLo = useRef<MediaElementAudioSourceNode | null>(null);
-
     const worker = useRef<Worker | null>(null);
-
-    function initializeAudio() {
-        if (audioContext === null) return;
-        const ctx = audioContext;
-
-        if (ctx.state !== 'running' && ctx.state !== 'closed') {
-            ctx.resume();
-        }
-
-        if ((!trackHi.current || !trackLo.current) && clickHi.current && clickLo.current) {
-            trackHi.current = ctx.createMediaElementSource(clickHi.current);
-            trackLo.current = ctx.createMediaElementSource(clickLo.current);
-            trackHi.current.connect(ctx.destination);
-            trackLo.current.connect(ctx.destination);
-        }
-    }
+    const clickHi = useRef<Howl>(new Howl({
+        src: ['click_hi.wav']
+    }));
+    const clickLo = useRef<Howl>(new Howl({
+        src: ['click_lo.wav']
+    }));
 
     useEffect(() => {
-        if (audioContext === null) return;
-        const ctx = audioContext;
-
-        initializeAudio();
-
         if (worker.current === null) {
             worker.current = new Worker('metronome-worker.js');
         }
 
         if (play) {
             worker.current.onmessage = (ev) => {
-                if (ctx.state !== 'running' && ctx.state !== 'closed') {
-                    ctx.resume();
-                }
                 if (ev.data % 2 === 0) {
                     if (ev.data === 0) {
-                        clickHi.current?.play();
+                        clickHi.current.play();
                     } else {
-                        clickLo.current?.play();
+                        clickLo.current.play();
                     }
                 }
                 if (onHalfBeat) onHalfBeat(ev.data);
@@ -64,8 +40,5 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
     }, [play, bpm, beats, onHalfBeat]);
 
-    return <div>
-        <audio ref={clickHi} src="click_hi.wav" />
-        <audio ref={clickLo} src="click_lo.wav" />
-    </div>;
+    return <div/>;
 }
