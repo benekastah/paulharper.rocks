@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import useAudioContext from "../hooks/useAudioContext";
 
 type Props = {
     play: boolean,
@@ -9,7 +10,7 @@ type Props = {
 
 
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
-    const audioContext = useRef<AudioContext | null>(null);
+    const audioContext = useAudioContext();
     const clickHi = useRef<HTMLAudioElement | null>(null);
     const clickLo = useRef<HTMLAudioElement | null>(null);
     const trackHi = useRef<MediaElementAudioSourceNode | null>(null);
@@ -17,11 +18,13 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
 
     const worker = useRef<Worker | null>(null);
 
-    useEffect(() => {
-        if (audioContext.current === null) {
-            audioContext.current = new (window.AudioContext || eval('window.webkitAudioContext'));
+    function initializeAudio() {
+        if (audioContext === null) return;
+        const ctx = audioContext;
+
+        if (ctx.state !== 'running' && ctx.state !== 'closed') {
+            ctx.resume();
         }
-        const ctx = audioContext.current;
 
         if ((!trackHi.current || !trackLo.current) && clickHi.current && clickLo.current) {
             trackHi.current = ctx.createMediaElementSource(clickHi.current);
@@ -29,6 +32,13 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
             trackHi.current.connect(ctx.destination);
             trackLo.current.connect(ctx.destination);
         }
+    }
+
+    useEffect(() => {
+        if (audioContext === null) return;
+        const ctx = audioContext;
+
+        initializeAudio();
 
         if (worker.current === null) {
             worker.current = new Worker('metronome-worker.js');
@@ -36,7 +46,7 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
 
         if (play) {
             worker.current.onmessage = (ev) => {
-                if (ctx.state === 'suspended') {
+                if (ctx.state !== 'running' && ctx.state !== 'closed') {
                     ctx.resume();
                 }
                 if (ev.data % 2 === 0) {
