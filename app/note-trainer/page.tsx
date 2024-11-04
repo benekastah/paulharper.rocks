@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Accidental, getAccidentalByName, getRandomNote, Note } from "./Note";
 import RandomTrainer from "./RandomTrainer";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -57,11 +57,21 @@ export default function Page() {
     getRandomChord(enabledAccidentals, enabledChords) :
     getRandomNote(enabledAccidentals), [chordMode, enabledAccidentals, enabledChords]);
 
-  return <div className="flex min-h-scnpx create-next-app@latestreen flex-col justify-between w-full">
+  const [settingsOpen, setSettingsOpen] = useLocalStorage('NoteTrainer.settingsOpen', false);
+
+  useEffect(() => {
+    setSettingsOpen(screen.width > 414);
+  }, []);
+
+  return <div className={`${styles.mainPage} flex min-h-scnpx create-next-app@latestreen flex-col justify-between w-full`}>
     <h2>Note Trainer</h2>
 
     <section className={styles.content}>
-      <div className={styles.settings}>
+      <details className={styles.settings} open={settingsOpen}>
+        <summary>
+          Settings
+        </summary>
+
         <div className={styles.form}>
           <div>
             <h3>Accidentals</h3>
@@ -102,7 +112,7 @@ export default function Page() {
         </div>
 
         <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
-      </div>
+      </details>
 
       <RandomTrainer generator={generator} beats={beats} bpm={bpm} renderItem={(note: DoublyLinkedList<Note | Chord>, index: number) =>
         <NoteCircle key={note.id} note={note.item} index={index} />

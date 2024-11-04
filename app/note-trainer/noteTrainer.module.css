@@ -1,4 +1,4 @@
-@media (max-width: 412px) {
+@media (max-width: 414px) {
   .mainPage {
     width: 100vw;
     padding: 20px;
@@ -33,7 +33,7 @@
 }
 
 .transport {
-  font-size: 32px;
+  font-size: 64px;
 }
 
 .transport > div {
