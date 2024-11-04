@@ -15,12 +15,12 @@ export function MetronomeConfig({beats, setBeats, bpm, setBpm}: Props) {
     return <div className={styles.form}>
         <div className={styles.inputRow}>
             <label htmlFor="beatsInput">Beats</label>
-            <input id="beatsInput" type="number" value={beats} onInput={onBeatsChange} />
+            <input id="beatsInput" type="number" value={beats || ''} onInput={onBeatsChange} />
         </div>
 
         <div className={styles.inputRow}>
             <label htmlFor="bpmInput">BPM</label>
-            <input id="bpmInput" type="number" value={bpm} onInput={onBpmChange} />
+            <input id="bpmInput" type="number" value={bpm || ''} onInput={onBpmChange} />
         </div>
     </div>;
 }
