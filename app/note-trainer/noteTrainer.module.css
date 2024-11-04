@@ -25,7 +25,6 @@
 .content .settings {
   flex-grow: 0;
   flex-shrink: 1;
-  width: 400px;
 }
 
 details.settings summary h3 {
