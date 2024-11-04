@@ -69,7 +69,7 @@ export default function Page() {
     <section className={styles.content}>
       <details className={styles.settings} open={settingsOpen}>
         <summary>
-          Settings
+          <h3>Settings</h3>
         </summary>
 
         <div className={styles.form}>
