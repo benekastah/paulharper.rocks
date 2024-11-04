@@ -27,8 +27,8 @@ export default function useLocalStorage<T>(name: string, defaultValue: T): [T, (
     }, [setValue]);
 
     useEffect(() => {
-        addEventListener('onload', () => _setValue(getItem(name, defaultValue)));
-    }, [value]);
+        setTimeout(() => _setValue(getItem(name, defaultValue)), 0);
+    }, []);
 
     return [value, _setValue];
 }
