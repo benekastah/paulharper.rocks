@@ -92,6 +92,13 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem }: 
         setCurrentNotes(getCurrentItems(notes.current));
     }, [initializeNotes, getCurrentItems, setCurrentNotes]);
 
+    useEffect(() => {
+        if (notes.current && linkedList.size(notes.current) > 5) {
+            linkedList.pop(notes.current);
+            setCurrentNotes(getCurrentItems(notes.current));
+        }
+    }, [currentNotes, setCurrentNotes]);
+
     return (
         <div className={styles.randomTrainer}>
             <Metronome play={play} beats={beats} bpm={bpm} onHalfBeat={onHalfBeat} />

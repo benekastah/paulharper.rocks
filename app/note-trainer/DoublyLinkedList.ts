@@ -35,6 +35,31 @@ export function prepend<T>(list: DoublyLinkedList<T>, item: T): DoublyLinkedList
 }
 
 
+export function breakTail<T>(list: DoublyLinkedList<T>): DoublyLinkedList<T> | undefined {
+    const result = list.tail;
+    list.tail = undefined;
+    if (result) {
+        result.head = undefined;
+    }
+    return result;
+}
+
+
+export function pop<T>(list: DoublyLinkedList<T>): T {
+    let current = list;
+    let prev = null;
+    while (current.tail) {
+        prev = current;
+        current = current.tail;
+    }
+    if (prev !== null) {
+        prev.tail = undefined;
+        current.head = undefined;
+    }
+    return current.item;
+}
+
+
 export function concat<T>(list1: DoublyLinkedList<T>, list2: DoublyLinkedList<T>): DoublyLinkedList<T> {
     let current1 = list1;
     while (current1.tail !== undefined) {
@@ -47,6 +72,17 @@ export function concat<T>(list1: DoublyLinkedList<T>, list2: DoublyLinkedList<T>
     current1.tail = current2;
     current2.head = current1;
     return list1;
+}
+
+
+export function size<T>(list: DoublyLinkedList<T>) {
+    let current: DoublyLinkedList<T> | undefined = list;
+    let count = 0;
+    while (current) {
+        count += 1;
+        current = current.tail;
+    }
+    return count;
 }
 
 
