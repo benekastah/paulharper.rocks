@@ -96,11 +96,11 @@ export default function Page() {
           {chordMode ?
             <div>
               <h3>Chords</h3>
-              <div className="flex">
+              <div className="grid grid-cols-3 gap-4">
                 {Object.keys(ChordType).map((name) => {
                   const chordType = getChordTypeByName(name);
                   if (chordType === null) return null;
-                  return <div key={name} className="mr-2">
+                  return <div key={name}>
                     <label>
                       {name}&nbsp;
                       <input type="checkbox" name="chords" value={name} checked={enabledChords[chordType]} onChange={(ev) => onChordEnabledChange(ev, chordType)} />

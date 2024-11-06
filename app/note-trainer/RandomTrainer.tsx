@@ -1,7 +1,6 @@
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import Metronome from "./Metronome";
 import Transport from "./Transport";
-import NoteCircle from "./NoteCircle";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 import * as linkedList from "./DoublyLinkedList"
 import styles from "./noteTrainer.module.css";

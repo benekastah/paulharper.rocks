@@ -101,6 +101,12 @@ details.settings summary h3 {
   display: inline-block;
 }
 
+.form > .inputRow > input,
+.form > .inputRow > textarea {
+  width: 70%;
+  display: inline-block;
+}
+
 .form > div {
   padding: 5px;
 }
