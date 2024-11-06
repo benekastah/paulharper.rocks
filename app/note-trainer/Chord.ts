@@ -16,6 +16,11 @@ export enum ChordType {
     Diminished = "dim",
     NinthSharp5 = "9♯5",
     NinthFlat5 = "9♭5",
+    Augmented9 = "aug9",
+    Eleventh = "11",
+    Thirteenth = "13",
+    ThirteenFlat9 = "13♭9",
+    Six9 = "6/9"
 }
 
 export function getChordTypeByName(name: string): ChordType | null {
@@ -34,6 +39,11 @@ export function getChordTypeByName(name: string): ChordType | null {
         case "Diminished": return ChordType.Diminished;
         case "NinthSharp5": return ChordType.NinthSharp5;
         case "NinthFlat5": return ChordType.NinthFlat5;
+        case "Augmented": return ChordType.Augmented;
+        case "Eleventh": return ChordType.Eleventh;
+        case "Thirteenth": return ChordType.Thirteenth;
+        case "ThirteenFlat9": return ChordType.ThirteenFlat9;
+        case "Six9": return ChordType.Six9;
     }
     return null;
 }
