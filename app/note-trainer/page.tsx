@@ -23,6 +23,23 @@ function getDefaultEnabledChords(): Record<ChordType, boolean> {
   return {
     [ChordType.Major]: true,
     [ChordType.Minor]: true,
+    [ChordType.Dominant7th]: false,
+    [ChordType.Dominant7Flat5]: false,
+    [ChordType.Dominant7Sharp5]: false,
+    [ChordType.Major7]: false,
+    [ChordType.Minor7]: false,
+    [ChordType.Ninth]: false,
+    [ChordType.MajorNinth]: false,
+    [ChordType.MinorNinth]: false,
+    [ChordType.Augmented]: false,
+    [ChordType.Diminished]: false,
+    [ChordType.NinthSharp5]: false,
+    [ChordType.NinthFlat5]: false,
+    [ChordType.Augmented9]: false,
+    [ChordType.Eleventh]: false,
+    [ChordType.Thirteenth]: false,
+    [ChordType.ThirteenFlat9]: false,
+    [ChordType.Six9]: false,
   };
 }
 
