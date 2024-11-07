@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {Howl, Howler} from 'howler';
 
 type Props = {
@@ -8,9 +8,9 @@ type Props = {
     onHalfBeat?: (halfBeat: number) => void,
 };
 
-
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     const worker = useRef<Worker | null>(null);
+    const [isStarted, setIsStarted] = useState(false);
     const clickHi = useRef<Howl>(new Howl({
         src: ['click_hi.wav']
     }));
@@ -34,11 +34,17 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
                 }
                 if (onHalfBeat) onHalfBeat(ev.data);
             };
-            worker.current.postMessage({name: 'START', bpm, beats});
+            if (!isStarted) {
+                worker.current.postMessage({name: 'START', bpm, beats});
+                setIsStarted(true);
+            }
         } else {
-            worker.current.postMessage({name: 'STOP'});
+            if (isStarted) {
+                worker.current.postMessage({name: 'STOP'});
+                setIsStarted(false);
+            }
         }
-    }, [play, bpm, beats, onHalfBeat]);
+    }, [play, bpm, beats, onHalfBeat, isStarted, setIsStarted]);
 
     return <div/>;
 }

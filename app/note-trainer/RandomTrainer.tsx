@@ -10,11 +10,11 @@ type Props<T> = {
     beats: number,
     bpm: number,
     renderItem: (item: DoublyLinkedList<T>, index: number) => ReactElement
+    play: boolean,
+    setPlay: (a: boolean) => void
 };
 
-export default function RandomTrainer<T>({ generator, beats, bpm, renderItem }: Props<T>) {
-    const [play, setPlay] = useState(false);
-
+export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, play, setPlay }: Props<T>) {
     const initializeNotes = useCallback((notes: DoublyLinkedList<T> | null): DoublyLinkedList<T> => {
         if (notes === null) {
             notes = linkedList.create(generator());
