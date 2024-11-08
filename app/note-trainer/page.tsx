@@ -133,7 +133,7 @@ export default function Page() {
             </div> : null}
         </div>
 
-        <MetronomeConfig disabled={play} beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
+        <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
       </details>
 
       <RandomTrainer generator={generator} beats={beats} bpm={bpm} play={play} setPlay={setPlay} renderItem={renderNoteCircle} />
