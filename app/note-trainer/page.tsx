@@ -83,7 +83,7 @@ export default function Page() {
   const [settingsOpen, setSettingsOpen] = useLocalStorage('NoteTrainer.settingsOpen', false);
 
   useEffect(() => {
-    setSettingsOpen(screen.width > 414);
+    setSettingsOpen(screen.width >= 1000);
   }, []);
 
   const renderNoteCircle = useCallback((note: DoublyLinkedList<Note>, index: number) =>
