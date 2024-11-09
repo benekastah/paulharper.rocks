@@ -72,19 +72,19 @@ details.settings summary h3 {
   font-size: 25px;
 }
 
-.noteCircle.index-0, 
+.noteCircle.index-0,
 .chordCircle.index-0 {
   top: -100px;
   left: 50px;
 }
 
-.noteCircle.index-1, 
+.noteCircle.index-1,
 .chordCircle.index-1 {
   top: 0px;
   left: 50px;
 }
 
-.noteCircle.index-2, 
+.noteCircle.index-2,
 .chordCircle.index-2 {
   top: 110px;
   left: 0px;
@@ -100,7 +100,7 @@ details.settings summary h3 {
   font-size: 50px;
 }
 
-.noteCircle.index-3, 
+.noteCircle.index-3,
 .chordCircle.index-3 {
   top: 320px;
   left: 50px;

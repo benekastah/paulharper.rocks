@@ -137,8 +137,8 @@ export default function Page() {
                   if (chordType === null) return null;
                   return <div key={name}>
                     <label>
-                      _{chordType}&nbsp;
                       <input type="checkbox" name="chords" value={name} checked={enabledChords[chordType]} onChange={(ev) => onChordEnabledChange(ev, chordType)} />
+                      &nbsp;_{chordType}
                     </label>
                   </div>
                 })}
