@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Accidental, getAccidentalByName, getRandomNote, Note } from "./Note";
+import { Accidental, getAccidentalByName, getAccidentalTitle, getRandomNote, Note } from "./Note";
 import RandomTrainer from "./RandomTrainer";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { Chord, ChordType, getChordTypeByName, getRandomChord } from "./Chord";
@@ -107,17 +107,22 @@ export default function Page() {
           <h3>Settings</h3>
         </summary>
 
+        <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
+
         <div className={styles.form}>
           <div>
             <h3>Accidentals</h3>
-            <div className="flex">
+            <div className="grid grid-cols-4 gap-2">
               {Object.keys(Accidental).map((name) => {
                 const accidental = getAccidentalByName(name);
                 if (accidental === null) return null;
-                return <div key={name} className="mr-2">
+                return <div key={name}>
                   <label>
-                    {name}&nbsp;
-                    <input type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[accidental]} onChange={(ev) => onAccidentalEnabledChange(ev, accidental)} />
+                    <input
+                      type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[accidental]}
+                      onChange={(ev) => onAccidentalEnabledChange(ev, accidental)}
+                    />
+                    &nbsp;{getAccidentalTitle(accidental)}
                   </label>
                 </div>;
               })}
@@ -145,8 +150,6 @@ export default function Page() {
               </div>
             </div> : null}
         </div>
-
-        <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
       </details>
 
       {chordMode ?

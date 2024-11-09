@@ -29,6 +29,15 @@ export function getAccidentalByName(name: string): Accidental | null {
     return null;
 }
 
+export function getAccidentalTitle(acc: Accidental): string {
+    switch (acc) {
+        case Accidental.None:
+            return 'No accidental';
+        default:
+            return acc.toString();
+    }
+}
+
 export const allAccidentals: Accidental[] = [Accidental.Sharp, Accidental.Flat, Accidental.Natural, Accidental.None];
 
 export class Note {
