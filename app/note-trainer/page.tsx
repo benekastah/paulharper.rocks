@@ -9,6 +9,7 @@ import styles from "./noteTrainer.module.css";
 import { MetronomeConfig } from "./MetronomeConfig";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 import NoteCircle from "./NoteCircle";
+import ChordCircle from "./ChordCircle";
 
 function getDefaultEnabledAccidentals(): Record<Accidental, boolean> {
   return {
@@ -71,9 +72,13 @@ export default function Page() {
     setEnabledChords(newEnabledChords);
   }, [enabledChords, setEnabledChords]);
 
-  const generator = useCallback(() => chordMode ? 
-    getRandomChord(enabledAccidentals, enabledChords) :
-    getRandomNote(enabledAccidentals), [chordMode, enabledAccidentals, enabledChords]);
+  const noteGenerator = useCallback(
+    () => getRandomNote(enabledAccidentals),
+    [enabledAccidentals]);
+
+  const chordGenerator = useCallback(
+    () => getRandomChord(enabledAccidentals, enabledChords),
+    [enabledAccidentals, enabledChords]);
 
   const [settingsOpen, setSettingsOpen] = useLocalStorage('NoteTrainer.settingsOpen', false);
 
@@ -81,9 +86,17 @@ export default function Page() {
     setSettingsOpen(screen.width > 414);
   }, []);
 
-  const renderNoteCircle = useCallback((note: DoublyLinkedList<Note | Chord>, index: number) =>
+  const renderNoteCircle = useCallback((note: DoublyLinkedList<Note>, index: number) =>
     <NoteCircle key={note.id} note={note.item} index={index} />
   , []);
+
+  const renderChordCircle = useCallback((note: DoublyLinkedList<Chord>, index: number) =>
+    <ChordCircle key={note.id} chord={note.item} index={index} />
+  , []);
+
+  const randomGeneratorCommonProps = {
+    beats, bpm, play, setPlay
+  };
 
   return <div className={`${styles.mainPage} flex min-h-scnpx create-next-app@latestreen flex-col justify-between w-full`}>
     <h2>Note Trainer</h2>
@@ -136,7 +149,10 @@ export default function Page() {
         <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
       </details>
 
-      <RandomTrainer generator={generator} beats={beats} bpm={bpm} play={play} setPlay={setPlay} renderItem={renderNoteCircle} />
+      {chordMode ?
+        <RandomTrainer {...randomGeneratorCommonProps} generator={chordGenerator} renderItem={renderChordCircle} /> :
+        <RandomTrainer {...randomGeneratorCommonProps} generator={noteGenerator} renderItem={renderNoteCircle} />
+      }
     </section>
   </div>;
 }

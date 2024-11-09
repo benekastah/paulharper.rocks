@@ -1,9 +1,8 @@
-import { Chord } from "./Chord";
 import { Note } from "./Note";
 import styles from "./noteTrainer.module.css";
 
 type Props = {
-    note: Note | Chord,
+    note: Note,
     index: number,
 };
 
