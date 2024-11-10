@@ -120,6 +120,7 @@ export default function Page() {
         <div className={styles.form}>
           <div>
             <h3>Accidentals</h3>
+            <p className={styles.helptext}>Which accidentals to use when generating random notes.</p>
             <div className="grid grid-cols-4 gap-2">
               {Object.keys(Accidental).map((name) => {
                 const accidental = getAccidentalByName(name);
@@ -137,13 +138,15 @@ export default function Page() {
           </div>
 
           <div>
-            <label>Use chord mode <input type="checkbox" name="chordMode" checked={chordMode} onChange={(ev) => setChordMode(ev.target.checked)} /></label>
+            <p className={styles.helptext}>Check this if you want to practice random chords.</p>
+            <label><input type="checkbox" name="chordMode" checked={chordMode} onChange={(ev) => setChordMode(ev.target.checked)} />&nbsp;Use chord mode</label>
           </div>
 
           {chordMode ?
             <div>
               <h3>Chords</h3>
-              <div className="grid grid-cols-3 gap-4">
+              <p className={styles.helptext}>Which chords types to use when generating random chords.</p>
+              <div className="grid grid-cols-4 gap-4">
                 {Object.keys(ChordType).map((name) => {
                   const chordType = getChordTypeByName(name);
                   if (chordType === null) return null;

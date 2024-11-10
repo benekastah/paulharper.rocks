@@ -108,9 +108,17 @@ details.settings summary h3 {
   left: 50px;
 }
 
+.form > div {
+  margin: 5px 0;
+}
+
 .form > .inputRow > label {
   width: 30%;
   display: inline-block;
+}
+
+.helptext {
+  font-style: italic;
 }
 
 .form > .inputRow > input,

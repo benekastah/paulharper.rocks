@@ -15,11 +15,13 @@ export function MetronomeConfig({beats, setBeats, bpm, setBpm}: Props) {
     return <div className={styles.form}>
         <div className={styles.inputRow}>
             <label htmlFor="beatsInput">Beats</label>
+            <p className={styles.helptext}>The number of beats per measure.</p>
             <input id="beatsInput" type="number" value={beats || ''} onInput={onBeatsChange} />
         </div>
 
         <div className={styles.inputRow}>
             <label htmlFor="bpmInput">BPM</label>
+            <p className={styles.helptext}>How fast the tempo is in beats per minute.</p>
             <input id="bpmInput" type="number" value={bpm || ''} onInput={onBpmChange} />
         </div>
     </div>;
