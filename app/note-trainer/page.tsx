@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { Accidental, getAccidentalByName, getAccidentalTitle, getRandomNote, Note } from "./Note";
+import { ReactElement, useCallback, useEffect, useState } from "react";
+import { Accidental, getAccidentalByName, getRandomNote, Note } from "./Note";
 import RandomTrainer from "./RandomTrainer";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { Chord, ChordType, getChordTypeByName, getRandomChord } from "./Chord";
@@ -42,6 +42,14 @@ function getDefaultEnabledChords(): Record<ChordType, boolean> {
     [ChordType.ThirteenFlat9]: false,
     [ChordType.Six9]: false,
   };
+}
+
+function getAccidentalTitle(accidental: Accidental): ReactElement {
+  switch (accidental) {
+    case Accidental.None: return <div>Nothing</div>
+    default:
+      return <div>{accidental}</div>;
+  }
 }
 
 export default function Page() {
@@ -121,8 +129,7 @@ export default function Page() {
                     <input
                       type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[accidental]}
                       onChange={(ev) => onAccidentalEnabledChange(ev, accidental)}
-                    />
-                    &nbsp;{getAccidentalTitle(accidental)}
+                    />&nbsp;{getAccidentalTitle(accidental)}
                   </label>
                 </div>;
               })}

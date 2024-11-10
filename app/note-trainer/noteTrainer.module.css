@@ -10,6 +10,7 @@
 
   .content .settings {
     width: 100%;
+    max-width: none;
   }
 }
 
@@ -25,6 +26,7 @@
 .content .settings {
   flex-grow: 0;
   flex-shrink: 1;
+  max-width: 400px;
 }
 
 details.settings summary h3 {
