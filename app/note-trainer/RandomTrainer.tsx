@@ -89,8 +89,12 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
     }, [initializeNotes, getCurrentItems, setCurrentNotes]);
 
     useEffect(() => {
-        if (notes.current && linkedList.size(notes.current) > 5) {
-            linkedList.pop(notes.current);
+        if (notes.current && linkedList.size(notes.current) > 100) {
+            if (linkedList.tailSize(notes.current) <= 2) {
+                linkedList.unshift(notes.current);
+            } else {
+                linkedList.pop(notes.current);
+            }
             setCurrentNotes(getCurrentItems(notes.current));
         }
     }, [currentNotes, setCurrentNotes]);

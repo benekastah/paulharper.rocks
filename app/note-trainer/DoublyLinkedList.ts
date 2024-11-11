@@ -60,6 +60,21 @@ export function pop<T>(list: DoublyLinkedList<T>): T {
 }
 
 
+export function unshift<T>(list: DoublyLinkedList<T>): T {
+    let current = list;
+    let prev = null;
+    while (current.head) {
+        prev = current;
+        current = current.head;
+    }
+    if (prev !== null) {
+        prev.head = undefined;
+        current.tail = undefined;
+    }
+    return current.item;
+}
+
+
 export function concat<T>(list1: DoublyLinkedList<T>, list2: DoublyLinkedList<T>): DoublyLinkedList<T> {
     let current1 = list1;
     while (current1.tail !== undefined) {
@@ -75,14 +90,30 @@ export function concat<T>(list1: DoublyLinkedList<T>, list2: DoublyLinkedList<T>
 }
 
 
-export function size<T>(list: DoublyLinkedList<T>) {
-    let current: DoublyLinkedList<T> | undefined = list;
+export function headSize<T>(list: DoublyLinkedList<T>) {
+    let current = list.head;
+    let count = 0;
+    while (current) {
+        count += 1;
+        current = current.head;
+    }
+    return count;
+}
+
+
+export function tailSize<T>(list: DoublyLinkedList<T>) {
+    let current = list.tail;
     let count = 0;
     while (current) {
         count += 1;
         current = current.tail;
     }
     return count;
+}
+
+
+export function size<T>(list: DoublyLinkedList<T>) {
+    return 1 + headSize(list) + tailSize(list);
 }
 
 
