@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Howl } from 'howler';
 import _ from 'lodash';
 
+import styles from "./noteTrainer.module.css";
+
 type Props = {
     play: boolean,
     beats: number,
@@ -18,6 +20,7 @@ type WorkerState = {
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     const worker = useRef<Worker | null>(null);
     const [workerState, setWorkerState] = useState<WorkerState>({play, beats, bpm});
+    const [beatNumber, setBeatNumber] = useState<number>(0);
     const clickHi = useRef<Howl>(new Howl({
         src: ['click_hi.wav']
     }));
@@ -47,6 +50,7 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         const nextWorkerState = getNextWorkerState();
 
         worker.current.onmessage = (ev) => {
+            setBeatNumber(ev.data);
             if (ev.data === 0) {
                 const nextWorkerState = getNextWorkerState();
                 // If we're on the first beat and bpm or beat have changed, restart the session
@@ -76,5 +80,10 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
     }, [play, bpm, beats, onHalfBeat, workerState, setWorkerState]);
 
-    return <div/>;
+    const beatClass = styles[`beat-${beatNumber % 2 == 0 ? 'even' : 'odd'}`];
+    return <div className={`${styles.metronome} ${beatClass}`}>
+        <p>
+            Beat {beatNumber >= 0 ? (beatNumber / 2) + 1 : 1}
+        </p>
+    </div>;
 }

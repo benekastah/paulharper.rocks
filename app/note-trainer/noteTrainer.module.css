@@ -108,10 +108,6 @@ details.settings summary h3 {
   left: 50px;
 }
 
-.form > div {
-  margin: 5px 0;
-}
-
 .form > .inputRow > label {
   width: 30%;
   display: inline-block;
@@ -128,5 +124,5 @@ details.settings summary h3 {
 }
 
 .form > div {
-  padding: 5px;
+  margin: 10px 0;
 }

@@ -102,10 +102,6 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
         <div className={styles.randomTrainer}>
             <Metronome play={play} beats={beats} bpm={bpm} onHalfBeat={onHalfBeat} />
             <Transport play={play} onPlay={onPlay} onPause={onPause} onSkipBack={onSkipBack} onSkipForward={onSkipForward} />
-            <p>
-                Beat {halfBeat >= 0 ? (halfBeat / 2) + 1 : 1}
-            </p>
-
             <section className={styles.noteCircles}>
                 {currentNotes.map((note, i) => renderItem(note, i))}
             </section>
