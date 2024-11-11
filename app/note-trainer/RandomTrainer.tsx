@@ -52,8 +52,6 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
     const notes = useRef<DoublyLinkedList<T> | null>(null);
     const [currentNotes, setCurrentNotes] = useState<DoublyLinkedList<T>[]>([]);
 
-    const [halfBeat, setHalfBeat] = useState(-1);
-
     useEffect(() => {
         notes.current = initializeNotes(null);
         setCurrentNotes(getCurrentItems(notes.current));
@@ -83,7 +81,6 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
         if (halfBeat === 0) {
             onSkipForward();
         }
-        setHalfBeat(halfBeat);
     }, [onSkipForward]);
 
     useEffect(() => {
