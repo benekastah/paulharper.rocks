@@ -131,6 +131,11 @@ details.settings summary h3 {
   font-family: 'Courier New', Courier, monospace;
 }
 
+.metronome p {
+  border-radius: 5px;
+  font-size: 24px;
+}
+
 .beat-even p {
   background-color: rgb(var(--background-start-rgb));
   color: rgb(var(--foreground-rgb));
