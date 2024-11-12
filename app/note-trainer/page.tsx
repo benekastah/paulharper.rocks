@@ -111,7 +111,7 @@ export default function Page() {
 
         <div className={styles.form}>
           <div>
-            <h3>Accidentals</h3>
+            <label>Accidentals</label>
             <p className={styles.helptext}>Which accidentals to use when generating random notes.</p>
             <div className="grid grid-cols-4 gap-2">
               {Object.keys(Accidental).map((name) => {
@@ -136,7 +136,7 @@ export default function Page() {
 
           {chordMode ?
             <div>
-              <h3>Chords</h3>
+              <label>Chords</label>
               <p className={styles.helptext}>Which chords types to use when generating random chords.</p>
               <div className="grid grid-cols-4 gap-4">
                 {Object.keys(ChordType).map((name) => {
