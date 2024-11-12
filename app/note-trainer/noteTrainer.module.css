@@ -126,3 +126,7 @@ details.settings summary h3 {
 .form > div {
   margin: 10px 0;
 }
+
+.metronome {
+  font-family: 'Courier New', Courier, monospace;
+}
