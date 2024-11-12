@@ -130,3 +130,13 @@ details.settings summary h3 {
 .metronome {
   font-family: 'Courier New', Courier, monospace;
 }
+
+.beat-even p {
+  background-color: rgb(var(--background-start-rgb));
+  color: rgb(var(--foreground-rgb));
+}
+
+.beat-odd p {
+  color: rgb(var(--background-start-rgb));
+  background-color: rgb(var(--foreground-rgb));
+}
