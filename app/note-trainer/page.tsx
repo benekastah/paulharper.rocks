@@ -122,7 +122,7 @@ export default function Page() {
                     <input
                       type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[accidental]}
                       onChange={(ev) => onAccidentalEnabledChange(ev, accidental)}
-                    /> _{accidental}
+                    /> C{accidental}
                   </label>
                 </div>;
               })}
@@ -145,7 +145,7 @@ export default function Page() {
                   return <div key={name}>
                     <label>
                       <input type="checkbox" name="chords" value={name} checked={enabledChords[chordType]} onChange={(ev) => onChordEnabledChange(ev, chordType)} />
-                      &nbsp;_{chordType}
+                      &nbsp;C{chordType}
                     </label>
                   </div>;
                 })}
