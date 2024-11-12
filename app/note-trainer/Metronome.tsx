@@ -81,9 +81,13 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     }, [play, bpm, beats, onHalfBeat, workerState, setWorkerState]);
 
     const beatClass = styles[`beat-${beatNumber % 2 == 0 ? 'even' : 'odd'}`];
+    const beat = beatNumber % 2 === 0 ?
+        <span>{beatNumber / 2 + 1}&nbsp;</span> :
+        <span>{Math.floor(beatNumber / 2 + 1)}+</span>;
     return <div className={`${styles.metronome} ${beatClass}`}>
         <p>
-            Beat {beatNumber >= 0 ? ((beatNumber / 2) + 1).toFixed(1) : 1}
+            Beat {beat}
+            {/* Beat {beatNumber >= 0 ? ((beatNumber / 2) + 1).toFixed(1) : 1} */}
         </p>
     </div>;
 }
