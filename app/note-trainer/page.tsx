@@ -44,14 +44,6 @@ function getDefaultEnabledChords(): Record<ChordType, boolean> {
   };
 }
 
-function getAccidentalTitle(accidental: Accidental): ReactElement {
-  switch (accidental) {
-    case Accidental.None: return <div>Nothing</div>
-    default:
-      return <div>{accidental}</div>;
-  }
-}
-
 export default function Page() {
   const [play, setPlay] = useState(false);
   const [chordMode, setChordMode] = useLocalStorage<boolean>('NoteTrainer.chordMode', false);
@@ -130,7 +122,7 @@ export default function Page() {
                     <input
                       type="checkbox" name="accidentals" value={name} checked={enabledAccidentals[accidental]}
                       onChange={(ev) => onAccidentalEnabledChange(ev, accidental)}
-                    />&nbsp;{getAccidentalTitle(accidental)}
+                    /> _{accidental}
                   </label>
                 </div>;
               })}
