@@ -31,20 +31,18 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
     }, [play, onPlay, onPause]);
 
     return <div className={`flex ${styles.transport}`}>
-        <div>
-            <button onClick={onSkipBack}>
-                <IoPlaySkipBackSharp />
-            </button>
-            {play ?
-                <button onClick={onPause}>
-                    <IoPauseSharp />
-                </button> :
-                <button onClick={onPlay}>
-                    <IoPlaySharp />
-                </button>}
-            <button onClick={onSkipForward}>
-                <IoPlaySkipForwardSharp />
-            </button>
-        </div>
+        <button onClick={onSkipBack}>
+            <IoPlaySkipBackSharp />
+        </button>
+        {play ?
+            <button onClick={onPause}>
+                <IoPauseSharp />
+            </button> :
+            <button onClick={onPlay}>
+                <IoPlaySharp />
+            </button>}
+        <button onClick={onSkipForward}>
+            <IoPlaySkipForwardSharp />
+        </button>
     </div>
 }

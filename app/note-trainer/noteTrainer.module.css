@@ -38,12 +38,20 @@ details.settings summary h3 {
   text-align: center;
 }
 
+.controls {
+  align-items: center;
+}
+
 .transport {
   font-size: 64px;
 }
 
 .transport > div {
   margin: auto;
+}
+
+.mute, .unmute {
+  font-size: 40px;
 }
 
 .mainPage > * {

@@ -4,6 +4,7 @@ import Transport from "./Transport";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 import * as linkedList from "./DoublyLinkedList"
 import styles from "./noteTrainer.module.css";
+import MuteButton from "./MuteButton";
 
 type Props<T> = {
     generator: () => T
@@ -102,7 +103,10 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
     return (
         <div className={styles.randomTrainer}>
             <Metronome play={play} beats={beats} bpm={bpm} onHalfBeat={onHalfBeat} />
-            <Transport play={play} onPlay={onPlay} onPause={onPause} onSkipBack={onSkipBack} onSkipForward={onSkipForward} />
+            <div className={`flex ${styles.controls}`}>
+                <Transport play={play} onPlay={onPlay} onPause={onPause} onSkipBack={onSkipBack} onSkipForward={onSkipForward} />
+                <MuteButton />
+            </div>
             <section className={styles.noteCircles}>
                 {currentNotes.map((note, i) => renderItem(note, i))}
             </section>
