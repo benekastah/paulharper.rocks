@@ -52,13 +52,11 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
 
         worker.current.onmessage = (ev) => {
             setBeatNumber(ev.data);
-            if (ev.data === 0) {
-                const nextWorkerState = getNextWorkerState();
-                // If we're on the first beat and bpm or beat have changed, restart the session
-                if (!_.isEqual(workerState, nextWorkerState)) {
-                    startMetronome();
-                    return;
-                }
+            const nextWorkerState = getNextWorkerState();
+            // If we're on the first beat and bpm or beat have changed, restart the session
+            if (!_.isEqual(workerState, nextWorkerState)) {
+                startMetronome();
+                return;
             }
             if (ev.data % 2 === 0) {
                 if (ev.data === 0) {

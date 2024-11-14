@@ -4,7 +4,6 @@ import Transport from "./Transport";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 import * as linkedList from "./DoublyLinkedList"
 import styles from "./noteTrainer.module.css";
-import MuteButton from "./MuteButton";
 
 type Props<T> = {
     generator: () => T
