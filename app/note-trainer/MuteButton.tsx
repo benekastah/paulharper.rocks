@@ -21,9 +21,9 @@ export default function MuteButton() {
 
     return muted ?
         <button onClick={onUnmute} className={styles.unmute}>
-            <IoVolumeHighSharp />
+            <IoVolumeMuteSharp />
         </button> :
         <button onClick={onMute} className={styles.mute}>
-            <IoVolumeMuteSharp />
+            <IoVolumeHighSharp />
         </button>;
 }

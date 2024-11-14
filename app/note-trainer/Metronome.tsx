@@ -3,6 +3,7 @@ import { Howl } from 'howler';
 import _ from 'lodash';
 
 import styles from "./noteTrainer.module.css";
+import MuteButton from "./MuteButton";
 
 type Props = {
     play: boolean,
@@ -80,14 +81,11 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
     }, [play, bpm, beats, onHalfBeat, workerState, setWorkerState]);
 
-    const beatClass = styles[`beat-${beatNumber % 2 == 0 ? 'even' : 'odd'}`];
-    const beat = beatNumber % 2 === 0 ?
-        <span>{beatNumber / 2 + 1}&nbsp;</span> :
-        <span>{Math.floor(beatNumber / 2 + 1)}+</span>;
-    return <div className={`${styles.metronome} ${beatClass}`}>
-        <p>
-            Beat {beat}
-            {/* Beat {beatNumber >= 0 ? ((beatNumber / 2) + 1).toFixed(1) : 1} */}
-        </p>
+    return <div className={`${styles.metronome} flex`}>
+        {_.times(beats, (i) =>
+            <div key={i} className={`${styles.beat} ${i * 2 === beatNumber ? styles.active : ''}`}>
+                {i + 1}
+            </div>)}
+        <MuteButton />
     </div>;
 }

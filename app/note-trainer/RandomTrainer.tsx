@@ -102,11 +102,8 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
 
     return (
         <div className={styles.randomTrainer}>
+            <Transport play={play} onPlay={onPlay} onPause={onPause} onSkipBack={onSkipBack} onSkipForward={onSkipForward} />
             <Metronome play={play} beats={beats} bpm={bpm} onHalfBeat={onHalfBeat} />
-            <div className={`flex ${styles.controls}`}>
-                <Transport play={play} onPlay={onPlay} onPause={onPause} onSkipBack={onSkipBack} onSkipForward={onSkipForward} />
-                <MuteButton />
-            </div>
             <section className={styles.noteCircles}>
                 {currentNotes.map((note, i) => renderItem(note, i))}
             </section>
