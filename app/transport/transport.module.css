@@ -1,6 +1,7 @@
 
 .transport {
   font-size: 64px;
+  display: inline-block;
 }
 
 .transport > div {

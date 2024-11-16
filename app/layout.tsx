@@ -25,6 +25,7 @@ export default function RootLayout({
             <ul className="list-none flex flex-row flex-auto">
               <li className="mx-1.5"><Link href="/">Home</Link></li>
               <li className="mx-1.5"><Link href="/about">About</Link></li>
+              <li className="mx-1.5"><Link href="/metronome">Metronome</Link></li>
               <li className="mx-1.5"><Link href="/note-trainer">Note trainer</Link></li>
             </ul>
           </nav>

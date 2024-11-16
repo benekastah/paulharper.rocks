@@ -14,6 +14,7 @@
   width: 40px;
   height: 50px;
   line-height: 50px;
+  text-align: center;
 }
 
 .beat {
@@ -24,4 +25,14 @@
 .beat.active {
   color: rgb(var(--background-start-rgb));
   background-color: rgb(var(--foreground-rgb));
+}
+
+.metronomePage {
+    text-align: center;
+}
+
+.metronomeConfig {
+    text-align: left;
+    width: 400px;
+    margin: 0 auto;
 }

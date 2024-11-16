@@ -10,7 +10,7 @@
 
 .form > .inputRow > input,
 .form > .inputRow > textarea {
-  width: 70%;
+  width: 100%;
   display: inline-block;
 }
 
