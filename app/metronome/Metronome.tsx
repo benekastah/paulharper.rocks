@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Howl } from 'howler';
 import _ from 'lodash';
 
-import styles from "./noteTrainer.module.css";
-import MuteButton from "./MuteButton";
+import styles from './metronome.module.css';
+import MuteButton from "../note-trainer/MuteButton";
 
 type Props = {
     play: boolean,

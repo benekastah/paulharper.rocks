@@ -1,16 +1,16 @@
 import { IoPlaySharp, IoPauseSharp, IoPlaySkipBackSharp, IoPlaySkipForwardSharp } from "react-icons/io5";
 
-import styles from './noteTrainer.module.css';
+import styles from './transport.module.css';
 import { useCallback, useEffect } from "react";
 import React from "react";
 
 
 type Props = {
     play: boolean,
-    onSkipBack: () => void,
+    onSkipBack?: () => void,
     onPlay: () => void,
     onPause: () => void,
-    onSkipForward: () => void,
+    onSkipForward?: () => void,
 };
 
 
@@ -20,9 +20,9 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
             if (ev.key === " ") {
                 play ? onPause() : onPlay();
             } else if (ev.key === "ArrowRight") {
-                onSkipForward();
+                if (onSkipForward) onSkipForward();
             } else if (ev.key === "ArrowLeft") {
-                onSkipBack();
+                if (onSkipBack) onSkipBack();
             }
         }
 
@@ -35,9 +35,9 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
         (ev) => ev.preventDefault(), []);
 
     return <div className={`flex ${styles.transport}`}>
-        <button onClick={onSkipBack} onKeyUp={preventDefault}>
+        {onSkipBack ? <button onClick={onSkipBack} onKeyUp={preventDefault}>
             <IoPlaySkipBackSharp />
-        </button>
+        </button> : null}
         {play ?
             <button onClick={onPause} onKeyUp={preventDefault}>
                 <IoPauseSharp />
@@ -45,8 +45,8 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
             <button onClick={onPlay} onKeyUp={preventDefault}>
                 <IoPlaySharp />
             </button>}
-        <button onClick={onSkipForward} onKeyUp={preventDefault}>
+        {onSkipForward ? <button onClick={onSkipForward} onKeyUp={preventDefault}>
             <IoPlaySkipForwardSharp />
-        </button>
+        </button> : null}
     </div>
 }

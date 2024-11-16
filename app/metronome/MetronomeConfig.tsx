@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import styles from "./noteTrainer.module.css";
+import styles from '../forms.module.css';
 
 type Props = {
     beats: number,

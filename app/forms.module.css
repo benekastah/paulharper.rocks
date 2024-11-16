@@ -1,0 +1,19 @@
+
+.form > .inputRow > label {
+  width: 30%;
+  display: inline-block;
+}
+
+.helptext {
+  font-style: italic;
+}
+
+.form > .inputRow > input,
+.form > .inputRow > textarea {
+  width: 70%;
+  display: inline-block;
+}
+
+.form > div {
+  margin: 10px 0;
+}

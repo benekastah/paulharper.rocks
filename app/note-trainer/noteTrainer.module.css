@@ -47,14 +47,6 @@ details.settings summary h3 {
   margin: 10px 0 0 0;
 }
 
-.transport {
-  font-size: 64px;
-}
-
-.transport > div {
-  margin: auto;
-}
-
 .mute, .unmute {
   font-size: 40px;
   margin-left: 20px;
@@ -122,50 +114,4 @@ details.settings summary h3 {
 .chordCircle.index-3 {
   top: 320px;
   left: 50px;
-}
-
-.form > .inputRow > label {
-  width: 30%;
-  display: inline-block;
-}
-
-.helptext {
-  font-style: italic;
-}
-
-.form > .inputRow > input,
-.form > .inputRow > textarea {
-  width: 70%;
-  display: inline-block;
-}
-
-.form > div {
-  margin: 10px 0;
-}
-
-.metronome {
-  font-family: 'Courier New', Courier, monospace;
-  justify-content: center;
-  align-items: center;
-}
-
-.metronome * {
-  border-radius: 5px;
-  font-size: 24px;
-}
-
-.beat {
-  width: 40px;
-  height: 50px;
-  line-height: 50px;
-}
-
-.beat {
-  background-color: rgb(var(--background-start-rgb));
-  color: rgb(var(--foreground-rgb));
-}
-
-.beat.active {
-  color: rgb(var(--background-start-rgb));
-  background-color: rgb(var(--foreground-rgb));
 }

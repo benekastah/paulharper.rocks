@@ -5,11 +5,13 @@ import { Accidental, getAccidentalByName, getRandomNote, Note } from "./Note";
 import RandomTrainer from "./RandomTrainer";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { Chord, ChordType, getChordTypeByName, getRandomChord } from "./Chord";
-import styles from "./noteTrainer.module.css";
-import { MetronomeConfig } from "./MetronomeConfig";
+import { MetronomeConfig } from "../metronome/MetronomeConfig";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 import NoteCircle from "./NoteCircle";
 import ChordCircle from "./ChordCircle";
+
+import styles from "./noteTrainer.module.css";
+import formStyles from "../forms.module.css";
 
 function getDefaultEnabledAccidentals(): Record<Accidental, boolean> {
   return {
@@ -109,10 +111,10 @@ export default function Page() {
 
         <MetronomeConfig beats={beats} bpm={bpm} setBeats={setBeats} setBpm={setBpm} />
 
-        <div className={styles.form}>
+        <div className={formStyles.form}>
           <div>
             <label>Accidentals</label>
-            <p className={styles.helptext}>Which accidentals to use when generating random notes.</p>
+            <p className={formStyles.helptext}>Which accidentals to use when generating random notes.</p>
             <div className="grid grid-cols-4 gap-2">
               {Object.keys(Accidental).map((name) => {
                 const accidental = getAccidentalByName(name);
@@ -130,14 +132,14 @@ export default function Page() {
           </div>
 
           <div>
-            <p className={styles.helptext}>Check this if you want to practice random chords.</p>
+            <p className={formStyles.helptext}>Check this if you want to practice random chords.</p>
             <label><input type="checkbox" name="chordMode" checked={chordMode} onChange={(ev) => setChordMode(ev.target.checked)} />&nbsp;Use chord mode</label>
           </div>
 
           {chordMode ?
             <div>
               <label>Chords</label>
-              <p className={styles.helptext}>Which chords types to use when generating random chords.</p>
+              <p className={formStyles.helptext}>Which chords types to use when generating random chords.</p>
               <div className="grid grid-cols-4 gap-4">
                 {Object.keys(ChordType).map((name) => {
                   const chordType = getChordTypeByName(name);
