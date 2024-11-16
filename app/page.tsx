@@ -1,6 +1,6 @@
 import styles from "./home.module.css";
 
-const EMAIL_ADDRESS = "me@paulharper.rocks";
+const EMAIL_ADDRESS = "paul@paulharper.rocks";
 
 type SongProps = {
   title: string,
