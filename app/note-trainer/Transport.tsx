@@ -1,7 +1,8 @@
 import { IoPlaySharp, IoPauseSharp, IoPlaySkipBackSharp, IoPlaySkipForwardSharp } from "react-icons/io5";
 
 import styles from './noteTrainer.module.css';
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import React from "react";
 
 
 type Props = {
@@ -30,18 +31,21 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
         return () => document.removeEventListener('keyup', onKeyup);
     }, [play, onPlay, onPause]);
 
+    const preventDefault: React.KeyboardEventHandler<HTMLButtonElement> = useCallback(
+        (ev) => ev.preventDefault(), []);
+
     return <div className={`flex ${styles.transport}`}>
-        <button onClick={onSkipBack}>
+        <button onClick={onSkipBack} onKeyUp={preventDefault}>
             <IoPlaySkipBackSharp />
         </button>
         {play ?
-            <button onClick={onPause}>
+            <button onClick={onPause} onKeyUp={preventDefault}>
                 <IoPauseSharp />
             </button> :
-            <button onClick={onPlay}>
+            <button onClick={onPlay} onKeyUp={preventDefault}>
                 <IoPlaySharp />
             </button>}
-        <button onClick={onSkipForward}>
+        <button onClick={onSkipForward} onKeyUp={preventDefault}>
             <IoPlaySkipForwardSharp />
         </button>
     </div>
