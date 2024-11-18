@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import formStyles from '../forms.module.css';
 import styles from './metronome.module.css';
+import Input from "../components/Input";
 
 type Props = {
     beats: number,
@@ -17,13 +18,13 @@ export function MetronomeConfig({beats, setBeats, bpm, setBpm}: Props) {
         <div className={formStyles.inputRow}>
             <label htmlFor="beatsInput">Beats</label>
             <p className={formStyles.helptext}>The number of beats per measure.</p>
-            <input id="beatsInput" type="number" value={beats || ''} onInput={onBeatsChange} />
+            <Input id="beatsInput" type="number" value={beats || ''} onInput={onBeatsChange} />
         </div>
 
         <div className={formStyles.inputRow}>
             <label htmlFor="bpmInput">BPM</label>
             <p className={formStyles.helptext}>How fast the tempo is in beats per minute.</p>
-            <input id="bpmInput" type="number" value={bpm || ''} onInput={onBpmChange} />
+            <Input id="bpmInput" type="number" value={bpm || ''} onInput={onBpmChange} />
         </div>
     </div>;
 }

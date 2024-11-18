@@ -9,6 +9,7 @@ import { MetronomeConfig } from "../metronome/MetronomeConfig";
 import Metronome from "../metronome/Metronome";
 import Transport from "../transport/Transport";
 import { IoAddSharp, IoTrashSharp } from "react-icons/io5";
+import Input from "../components/Input";
 
 type PracticeItem = {
     title: string,
@@ -43,7 +44,7 @@ function PracticeItemView({item, setItem}: PracticeItemViewProps) {
             <div className={formStyles.inputRow}>
                 <label htmlFor="practiceItemTitle">Title</label>
                 <p className={styles.helptext}>The title of the practice item</p>
-                <input id="practiceItemTitle" type="text" value={item.title} onInput={setTitle} />
+                <Input id="practiceItemTitle" type="text" value={item.title} onInput={setTitle} />
             </div>
         </div>
         <MetronomeConfig beats={item.beats} setBeats={setBeats} bpm={item.bpm} setBpm={setBpm} />
