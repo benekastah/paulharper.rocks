@@ -7,7 +7,3 @@
 .transport > div {
   margin: auto;
 }
-
-.transport button:disabled svg {
-    fill: rgb(var(--accent-color-1));
-}

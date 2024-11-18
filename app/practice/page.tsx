@@ -8,7 +8,7 @@ import formStyles from "../forms.module.css";
 import { MetronomeConfig } from "../metronome/MetronomeConfig";
 import Metronome from "../metronome/Metronome";
 import Transport from "../transport/Transport";
-import { IoCreateSharp, IoTrashBinSharp } from "react-icons/io5";
+import { IoAddSharp, IoTrashSharp } from "react-icons/io5";
 
 type PracticeItem = {
     title: string,
@@ -120,13 +120,13 @@ export default function Page() {
         </ol>
 
         <div>
-            {practiceItems.length === 0 ? <h1>There are no practice items.</h1> : null}
+            {practiceItems.length === 0 ? <h2>There are no routines</h2> : null}
             <div className={styles.buttonToolbar}>
                 <button onClick={insertItem}>
-                    <IoCreateSharp /> Create new practice item
+                    <IoAddSharp /> New routine
                 </button>
-                <button onClick={removeItem}>
-                    <IoTrashBinSharp /> Delete practice item
+                <button disabled={practiceItems.length === 0} onClick={removeItem}>
+                    <IoTrashSharp /> Delete routine
                 </button>
             </div>
         </div>

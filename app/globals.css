@@ -114,4 +114,20 @@ a:hover {
 a:visited {
   color: rgb(var(--link-color-visited));
 }
+
+button {
+  color: rgb(var(--foreground-rgb));
+}
+
+button svg {
+  fill: rgb(var(--foreground-rgb));
+}
+
+button:disabled {
+  color: rgb(var(--accent-color-1));
+}
+
+button:disabled svg {
+  fill: rgb(var(--accent-color-1));
+}
 /** End reset */
