@@ -19,14 +19,6 @@
     margin: 0;
 }
 
-.practiceItems li h1 {
-    font-size: 36px;
-}
-
-.practiceItems li h2 {
-    font-size: 20px;
-}
-
 .titleForm {
     max-width: var(--form-width);
     margin: 0 auto;

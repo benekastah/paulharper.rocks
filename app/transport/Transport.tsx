@@ -11,10 +11,11 @@ type Props = {
     onPlay: () => void,
     onPause: () => void,
     onSkipForward?: () => void,
+    hideDisabled?: boolean,
 };
 
 
-export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForward}: Props) {
+export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForward, hideDisabled}: Props) {
     useEffect(() => {
         function onKeyup(this: Document, ev: KeyboardEvent) {
             const activeTag = document.activeElement?.tagName.toLowerCase();
@@ -37,9 +38,11 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
         (ev) => ev.preventDefault(), []);
 
     return <div className={`flex ${styles.transport}`}>
-        {onSkipBack ? <button onClick={onSkipBack} onKeyUp={preventDefault}>
-            <IoPlaySkipBackSharp />
-        </button> : null}
+        {onSkipBack || !hideDisabled ?
+            <button disabled={onSkipBack === undefined} onClick={onSkipBack} onKeyUp={preventDefault}>
+                <IoPlaySkipBackSharp />
+            </button> :
+            null}
         {play ?
             <button onClick={onPause} onKeyUp={preventDefault}>
                 <IoPauseSharp />
@@ -47,8 +50,10 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
             <button onClick={onPlay} onKeyUp={preventDefault}>
                 <IoPlaySharp />
             </button>}
-        {onSkipForward ? <button onClick={onSkipForward} onKeyUp={preventDefault}>
-            <IoPlaySkipForwardSharp />
-        </button> : null}
+        {onSkipForward || !hideDisabled ?
+            <button disabled={onSkipForward === undefined} onClick={onSkipForward} onKeyUp={preventDefault}>
+                <IoPlaySkipForwardSharp />
+            </button> :
+            null}
     </div>
 }

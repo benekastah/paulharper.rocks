@@ -26,6 +26,6 @@ export default function Page() {
     return <div className={styles.metronomePage}>
         <MetronomeConfig beats={beats} setBeats={setBeats} bpm={bpm} setBpm={setBpm} />
         <Metronome play={play} beats={beats} bpm={bpm} />
-        <Transport play={play} onPlay={onPlay} onPause={onPause} />
+        <Transport play={play} onPlay={onPlay} onPause={onPause} hideDisabled />
     </div>;
 }

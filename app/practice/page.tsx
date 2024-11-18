@@ -102,14 +102,18 @@ export default function Page() {
     }, [play, setPlay, practiceItems]);
 
     return <div className={styles.practicePage}>
+        <header>
+            <h1>Practice</h1>
+        </header>
+
         <ol className={`flex ${styles.practiceItems}`}>
             {practiceItems.map((practiceItem, idx) => {
                 const isCurrent = idx === currentPracticeItem;
                 return <li key={idx} className={isCurrent ? styles.current : ''}>
                     <button onClick={() => setCurrentPracticeItem(idx)}>
                         {isCurrent ?
-                            <h1>{practiceItem.title}</h1> :
-                            <h2>{practiceItem.title}</h2>}
+                            <h2>{practiceItem.title}</h2> :
+                            <h3>{practiceItem.title}</h3>}
                     </button>
                 </li>;
             })}
