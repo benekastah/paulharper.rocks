@@ -28,15 +28,15 @@ type PracticeItemViewProps = {
 function PracticeItemView({item, setItem}: PracticeItemViewProps) {
     const setBeats = useCallback((beats: number) => {
         setItem({...item, beats})
-    }, [setItem, item]);
+    }, [setItem]);
 
     const setBpm = useCallback((bpm: number) => {
         setItem({...item, bpm})
-    }, [setItem, item]);
+    }, [setItem]);
 
     const setTitle = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
         setItem({...item, title: ev.target.value});
-    }, [setItem, item]);
+    }, [setItem]);
 
     return <div className={styles.practiceItem}>
         <div className={`${formStyles.form} ${styles.titleForm}`}>

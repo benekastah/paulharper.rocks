@@ -55,7 +55,7 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
     useEffect(() => {
         notes.current = initializeNotes(null);
         setCurrentNotes(getCurrentItems(notes.current));
-    }, [setCurrentNotes, getCurrentItems, initializeNotes]);
+    }, [setCurrentNotes]);
 
     const onPlay = useCallback(() => {
         setPlay(true);
@@ -97,7 +97,7 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
             }
             setCurrentNotes(getCurrentItems(notes.current));
         }
-    }, [currentNotes, setCurrentNotes, getCurrentItems]);
+    }, [currentNotes, setCurrentNotes]);
 
     return (
         <div className={styles.randomTrainer}>
