@@ -86,7 +86,7 @@ export default function Page() {
 
   useEffect(() => {
     setSettingsOpen(screen.width >= 1000);
-  }, []);
+  });
 
   const renderNoteCircle = useCallback((note: DoublyLinkedList<Note>, index: number) =>
     <NoteCircle key={note.id} note={note.item} index={index} />

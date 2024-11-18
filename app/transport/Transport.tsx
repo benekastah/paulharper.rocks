@@ -31,7 +31,7 @@ export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForw
         document.addEventListener('keyup', onKeyup);
 
         return () => document.removeEventListener('keyup', onKeyup);
-    }, [play, onPlay, onPause]);
+    }, [play, onPlay, onPause, onSkipBack, onSkipForward]);
 
     const preventDefault: React.KeyboardEventHandler<HTMLButtonElement> = useCallback(
         (ev) => ev.preventDefault(), []);
