@@ -17,6 +17,8 @@ type Props = {
 export default function Transport({play, onSkipBack, onPlay, onPause, onSkipForward}: Props) {
     useEffect(() => {
         function onKeyup(this: Document, ev: KeyboardEvent) {
+            const activeTag = document.activeElement?.tagName.toLowerCase();
+            if (activeTag === 'input' || activeTag === 'textarea') return;
             if (ev.key === " ") {
                 play ? onPause() : onPlay();
             } else if (ev.key === "ArrowRight") {

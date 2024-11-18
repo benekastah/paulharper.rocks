@@ -1,0 +1,43 @@
+.practicePage button svg {
+    display: inline;
+}
+
+.practicePage button * {
+    vertical-align: baseline;
+}
+
+.practiceItems {
+    align-items: baseline;
+}
+
+.practiceItems li {
+    margin-right: 10px;
+}
+
+.practiceItems h1,
+.practiceItems h2 {
+    margin: 0;
+}
+
+.practiceItems li h1 {
+    font-size: 36px;
+}
+
+.practiceItems li h2 {
+    font-size: 20px;
+}
+
+.titleForm {
+    width: 400px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.buttonToolbar button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.practicePage .body {
+    text-align: center;
+}
