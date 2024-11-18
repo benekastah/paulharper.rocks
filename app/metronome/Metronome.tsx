@@ -88,11 +88,14 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
     }, [play, bpm, beats, onHalfBeat, workerState, setWorkerState]);
 
-    return <div className={`${styles.metronome} flex`}>
-        {_.times(beats, (i) =>
-            <div key={i} className={`${styles.beat} ${i * 2 === beatNumber ? styles.active : ''}`}>
-                {i + 1}
-            </div>)}
-        <MuteButton />
+    return <div className={styles.metronome}>
+        <p>{bpm}bpm</p>
+        <ol className={`flex ${styles.beatList}`}>
+            {_.times(beats, (i) =>
+                <li key={i} className={`${styles.beat} ${i * 2 === beatNumber ? styles.active : ''}`}>
+                    {i + 1}
+                </li>)}
+            <li className={styles.muteButton}><MuteButton /></li>
+        </ol>
     </div>;
 }
