@@ -119,7 +119,7 @@ export default function Page() {
                 </button>
             </div>
 
-            <ol className={`flex ${styles.practiceItems}`}>
+            <ol className={`flex flex-wrap ${styles.practiceItems}`}>
                 {practiceItems.map((practiceItem, idx) => {
                     const isCurrent = idx === currentPracticeItem;
                     return <li key={idx} className={isCurrent ? styles.current : ''}>
