@@ -24,11 +24,11 @@ export default function useLocalStorage<T>(name: string, defaultValue: T): [T, (
     const _setValue = useCallback((newValue: T) => {
         setItem(name, newValue);
         setValue(newValue);
-    }, [setValue]);
+    }, [setValue, name]);
 
     useEffect(() => {
         setTimeout(() => _setValue(getItem(name, defaultValue)), 0);
-    }, []);
+    });
 
     return [value, _setValue];
 }
