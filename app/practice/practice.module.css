@@ -28,7 +28,7 @@
 }
 
 .titleForm {
-    width: 400px;
+    max-width: var(--form-width);
     margin: 0 auto;
     text-align: left;
 }

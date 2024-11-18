@@ -12,6 +12,14 @@
   --accent-color-2: 127 127 255;
   --link-color: 0 0 255;
   --link-color-visited: 255 0 255;
+
+  --form-width: 400px;
+}
+
+@media (max-width: 500px) {
+  :root {
+    --form-width: 100%;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

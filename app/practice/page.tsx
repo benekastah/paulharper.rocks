@@ -42,6 +42,7 @@ function PracticeItemView({item, setItem}: PracticeItemViewProps) {
         <div className={`${formStyles.form} ${styles.titleForm}`}>
             <div className={formStyles.inputRow}>
                 <label htmlFor="practiceItemTitle">Title</label>
+                <p className={styles.helptext}>The title of the practice item</p>
                 <input id="practiceItemTitle" type="text" value={item.title} onInput={setTitle} />
             </div>
         </div>
