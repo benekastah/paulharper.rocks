@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const localStorage = typeof window === 'undefined' ? {
     getItem: (name: string) => null,
@@ -19,7 +19,8 @@ function setItem<T>(name: string, value: T) {
 }
 
 export default function useLocalStorage<T>(name: string, defaultValue: T): [T, (value: T) => void] {
-    const [value, setValue] = useState<T>(defaultValue);
+    const defaultValueRef = useRef<T>(defaultValue);
+    const [value, setValue] = useState<T>(defaultValueRef.current);
 
     const _setValue = useCallback((newValue: T) => {
         setItem(name, newValue);
@@ -27,8 +28,8 @@ export default function useLocalStorage<T>(name: string, defaultValue: T): [T, (
     }, [setValue, name]);
 
     useEffect(() => {
-        setTimeout(() => _setValue(getItem(name, defaultValue)), 0);
-    }, []);
+        setTimeout(() => _setValue(getItem(name, defaultValueRef.current)), 0);
+    }, [_setValue, name]);
 
     return [value, _setValue];
 }
