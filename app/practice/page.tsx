@@ -17,7 +17,7 @@ type PracticeItem = {
 };
 
 function getDefaultPracticeItem() {
-    return {title: 'Title', beats: 4, bpm: 120};
+    return {title: 'My routine', beats: 4, bpm: 120};
 }
 
 type PracticeItemViewProps = {
@@ -72,11 +72,13 @@ export default function Page() {
     }, [currentPracticeItem, practiceItems, setPracticeItems]);
 
     const removeItem = useCallback(() => {
-        const nextPracticeItems = [...practiceItems];
-        nextPracticeItems.splice(currentPracticeItem, 1);
-        setPracticeItems(nextPracticeItems);
-        if (nextPracticeItems.length >= currentPracticeItem) {
-            setCurrentPracticeItem(nextPracticeItems.length - 1);
+        if (confirm("Are you sure you want to delete this routine?")) {
+            const nextPracticeItems = [...practiceItems];
+            nextPracticeItems.splice(currentPracticeItem, 1);
+            setPracticeItems(nextPracticeItems);
+            if (nextPracticeItems.length >= currentPracticeItem) {
+                setCurrentPracticeItem(nextPracticeItems.length - 1);
+            }
         }
     }, [currentPracticeItem, setCurrentPracticeItem, practiceItems, setPracticeItems]);
 
@@ -106,21 +108,7 @@ export default function Page() {
             <h1>Practice</h1>
         </header>
 
-        <ol className={`flex ${styles.practiceItems}`}>
-            {practiceItems.map((practiceItem, idx) => {
-                const isCurrent = idx === currentPracticeItem;
-                return <li key={idx} className={isCurrent ? styles.current : ''}>
-                    <button onClick={() => setCurrentPracticeItem(idx)}>
-                        {isCurrent ?
-                            <h2>{practiceItem.title}</h2> :
-                            <h3>{practiceItem.title}</h3>}
-                    </button>
-                </li>;
-            })}
-        </ol>
-
-        <div>
-            {practiceItems.length === 0 ? <h2>There are no routines</h2> : null}
+        <header>
             <div className={styles.buttonToolbar}>
                 <button onClick={insertItem}>
                     <IoAddSharp /> New routine
@@ -129,7 +117,22 @@ export default function Page() {
                     <IoTrashSharp /> Delete routine
                 </button>
             </div>
-        </div>
+
+            <ol className={`flex ${styles.practiceItems}`}>
+                {practiceItems.map((practiceItem, idx) => {
+                    const isCurrent = idx === currentPracticeItem;
+                    return <li key={idx} className={isCurrent ? styles.current : ''}>
+                        <button onClick={() => setCurrentPracticeItem(idx)}>
+                            {isCurrent ?
+                                <h2>{practiceItem.title}</h2> :
+                                <h3>{practiceItem.title}</h3>}
+                        </button>
+                    </li>;
+                })}
+            </ol>
+
+            {practiceItems.length === 0 ? <h2>There are no routines</h2> : null}
+        </header>
 
         {practiceItem ?
             <div className={styles.body}>
