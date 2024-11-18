@@ -34,6 +34,13 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
             worker.current = new Worker('metronome-worker.js');
         }
 
+        return () => {
+            worker.current?.terminate();
+            worker.current = null;
+        };
+    }, []);
+
+    useEffect(() => {
         function getNextWorkerState() {
             return { play, bpm, beats };
         }
@@ -50,10 +57,12 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
 
         const nextWorkerState = getNextWorkerState();
 
+        if (!worker.current) throw new Error('unreachable');
+
         worker.current.onmessage = (ev) => {
             setBeatNumber(ev.data);
             const nextWorkerState = getNextWorkerState();
-            // If we're on the first beat and bpm or beat have changed, restart the session
+            // If bpm or beat have changed, restart the session
             if (!_.isEqual(workerState, nextWorkerState)) {
                 startMetronome();
                 return;
