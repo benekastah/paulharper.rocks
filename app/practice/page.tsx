@@ -57,7 +57,7 @@ function PracticeItemView({item, setItem}: PracticeItemViewProps) {
 
 export default function Page() {
     const [practiceItems, setPracticeItems] = useLocalStorage<PracticeItem[]>('Practice.practiceItems', []);
-    const [currentPracticeItem, setCurrentPracticeItem] = useState(-1);
+    const [currentPracticeItem, setCurrentPracticeItem] = useLocalStorage('Practice.currentPracticeItem', -1);
     const practiceItem: PracticeItem | undefined = practiceItems[currentPracticeItem];
 
     const [play, setPlay] = useState(false);
@@ -117,6 +117,23 @@ export default function Page() {
             parentEl?.scroll(practiceItemEl.offsetLeft, 0);
         }
     }, [currentPracticeItem, practiceItems, practiceItem]);
+
+    useEffect(function keepCurrentPracticeItemInBounds() {
+        if (practiceItems.length) {
+            const min = 0;
+            const max = practiceItems.length - 1;
+            if (currentPracticeItem < min) {
+                setCurrentPracticeItem(min)
+            } else if (currentPracticeItem > max) {
+                setCurrentPracticeItem(max);
+            }
+        } else {
+            const expectedCurrentPracticeItem = -1;
+            if (currentPracticeItem !== expectedCurrentPracticeItem) {
+                setCurrentPracticeItem(expectedCurrentPracticeItem);
+            }
+        }
+    }, [currentPracticeItem, setCurrentPracticeItem, practiceItems]);
 
     return <div className={styles.practicePage}>
         <header>
