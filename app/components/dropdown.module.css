@@ -1,0 +1,9 @@
+
+.dropdown .menu {
+    position: absolute;
+    z-index: 1000;
+    background-color: rgb(var(--background-start-rgb));
+    border-radius: 5px;
+    border: solid 1px rgb(var(--accent-color-1));
+    padding: 10px;
+}
