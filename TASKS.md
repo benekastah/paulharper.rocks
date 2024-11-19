@@ -1,15 +1,15 @@
 - [ ] #bug #mobile Audio playback becomes unreliable on practice page after a few practice item switches
-- [x] #bug On #mobile you can click next past the end of the list
 - [ ] #feature Way to reorder practice items
-- [x] #bug Wording is wrong re routine. The routine should be the collection of practice items. An individual practice item should be called an exersize
 - [ ] #feature Build a library of exersizes and routines
 - [ ] #feature Way to save and load routines to/from a file
 - [ ] #feature multiple routines
 - [ ] #feature look into using indexedDB as an alternate storage layer
 - [ ] #idea instead of forms, use contenteditable for editing details
-- [x] #feature add link to practice page
 - [ ] #bug links look odd on #mobile, need hamburger menu instead
 - [ ] #bug sometimes audio context doesn't seem to start
 - [ ] #bug exersize links need better separation
 - [ ] #bug don't update metronome on every keystroke in metronome config
 - [ ] #feature add find notes as practice item type
+- [x] #feature add link to practice page
+- [x] #bug Wording is wrong re routine. The routine should be the collection of practice items. An individual practice item should be called an exersize
+- [x] #bug On #mobile you can click next past the end of the list
