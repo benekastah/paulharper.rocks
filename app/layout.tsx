@@ -23,11 +23,11 @@ export default function RootLayout({
 
           <nav>
             <ul className="list-none flex flex-row flex-auto">
-              <li className="mx-1.5"><Link href="/">Home</Link></li>
-              <li className="mx-1.5"><Link href="/about">About</Link></li>
-              <li className="mx-1.5"><Link href="/metronome">Metronome</Link></li>
-              <li className="mx-1.5"><Link href="/note-trainer">Note trainer</Link></li>
-              <li className="mx-1.5"><Link href="/practice">Practice</Link></li>
+              <li className="mr-3"><Link href="/">Home</Link></li>
+              <li className="mr-3"><Link href="/about">About</Link></li>
+              <li className="mr-3"><Link href="/metronome">Metronome</Link></li>
+              <li className="mr-3"><Link href="/note-trainer">Note trainer</Link></li>
+              <li className="mr-3"><Link href="/practice">Practice</Link></li>
             </ul>
           </nav>
         </header>
