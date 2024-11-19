@@ -150,12 +150,14 @@ export default function Page() {
             {practiceItems.length === 0 ? <h2>There are no exercises</h2> : null}
         </header>
 
-        <div className={styles.body}>
-            <Transport play={play} onPause={onPause} onPlay={onPlay}
-                onSkipBack={currentPracticeItem > 0 ? onPreviousItem : undefined}
-                onSkipForward={currentPracticeItem < practiceItems.length - 1 ? onNextItem : undefined} />
-            <Metronome play={play} beats={practiceItem?.beats || 4} bpm={practiceItem?.bpm || 120} />
-            {practiceItem ? <PracticeItemView item={practiceItem} setItem={setItem} /> : null}
-        </div>
+        {practiceItem ?
+            <div className={styles.body}>
+                <Transport play={play} onPause={onPause} onPlay={onPlay}
+                    onSkipBack={currentPracticeItem > 0 ? onPreviousItem : undefined}
+                    onSkipForward={currentPracticeItem < practiceItems.length - 1 ? onNextItem : undefined} />
+                <Metronome play={play} beats={practiceItem?.beats} bpm={practiceItem?.bpm} />
+                <PracticeItemView item={practiceItem} setItem={setItem} />
+            </div> :
+            null}
     </div>;
 }
