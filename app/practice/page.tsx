@@ -154,7 +154,7 @@ export default function Page() {
                 {practiceItems.map((practiceItem, idx) => {
                     const isCurrent = idx === currentPracticeItem;
                     const id = getPracticeItemId(idx, practiceItem);
-                    return <li id={id} key={id} className={isCurrent ? styles.current : ''}>
+                    return <li id={id} key={id} className="mr-4">
                         <button onClick={() => setCurrentPracticeItem(idx)}>
                             {isCurrent ?
                                 <h2>{practiceItem.title}</h2> :
