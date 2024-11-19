@@ -1,0 +1,12 @@
+- [ ] #bug #mobile Audio playback becomes unreliable on practice page after a few practice item switches
+- [ ] #bug On #mobile you can click next past the end of the list
+- [ ] #feature Way to reorder practice items
+- [ ] #bug Wording is wrong re routine. The routine should be the collection of practice items. An individual practice item should be called an exersize
+- [ ] #feature Build a library of exersizes and routines
+- [ ] #feature Way to save and load routines to/from a file
+- [ ] #feature multiple routines
+- [ ] #feature look into using indexedDB as an alternate storage layer
+- [ ] #idea instead of forms, use contenteditable for editing details
+- [x] #feature add link to practice page
+- [ ] #bug creating first exersize on mobile doesn't select the exersize
+- [ ] #bug links look odd on mobile, need hamburger menu instead
