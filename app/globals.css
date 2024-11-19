@@ -58,7 +58,6 @@ body > * {
   }
 }
 
-/** Reset */
 * {
   background-color: transparent;
   color: rgb(var(--foreground-rgb));
@@ -130,4 +129,23 @@ button:disabled {
 button:disabled svg {
   fill: rgb(var(--accent-color-1));
 }
-/** End reset */
+
+#navDropdown {
+  display: none;
+}
+#navLinks nav ul {
+  display: flex;
+}
+
+@media (max-width: 500px) {
+  #navDropdown {
+    display: block;
+  }
+  #navLinks {
+    display: none;
+  }
+
+  #navDropdown nav {
+
+  }
+}
