@@ -57,7 +57,7 @@ function PracticeItemView({item, setItem}: PracticeItemViewProps) {
 
 export default function Page() {
     const [practiceItems, setPracticeItems] = useLocalStorage<PracticeItem[]>('Practice.practiceItems', []);
-    const [currentPracticeItem, setCurrentPracticeItem] = useState(0);
+    const [currentPracticeItem, setCurrentPracticeItem] = useState(-1);
     const practiceItem: PracticeItem | undefined = practiceItems[currentPracticeItem];
 
     const [play, setPlay] = useState(false);
@@ -155,7 +155,7 @@ export default function Page() {
                 <Transport play={play} onPause={onPause} onPlay={onPlay}
                     onSkipBack={currentPracticeItem > 0 ? onPreviousItem : undefined}
                     onSkipForward={currentPracticeItem < practiceItems.length - 1 ? onNextItem : undefined} />
-                <Metronome play={play} beats={practiceItem?.beats} bpm={practiceItem?.bpm} />
+                <Metronome play={play} beats={practiceItem.beats} bpm={practiceItem.bpm} />
                 <PracticeItemView item={practiceItem} setItem={setItem} />
             </div> :
             null}
