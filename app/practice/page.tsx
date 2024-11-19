@@ -18,7 +18,7 @@ type PracticeItem = {
 };
 
 function getDefaultPracticeItem() {
-    return {title: 'My routine', beats: 4, bpm: 120};
+    return {title: 'My exercise', beats: 4, bpm: 120};
 }
 
 function getPracticeItemId(idx: number, item: PracticeItem) {
@@ -77,7 +77,7 @@ export default function Page() {
     }, [currentPracticeItem, practiceItems, setPracticeItems]);
 
     const removeItem = useCallback(() => {
-        if (confirm("Are you sure you want to delete this routine?")) {
+        if (confirm("Are you sure you want to delete this exercise?")) {
             const nextPracticeItems = [...practiceItems];
             nextPracticeItems.splice(currentPracticeItem, 1);
             setPracticeItems(nextPracticeItems);
@@ -126,10 +126,10 @@ export default function Page() {
         <header>
             <div className={styles.buttonToolbar}>
                 <button onClick={insertItem}>
-                    <IoAddSharp /> New routine
+                    <IoAddSharp /> New exercise
                 </button>
                 <button disabled={practiceItems.length === 0} onClick={removeItem}>
-                    <IoTrashSharp /> Delete routine
+                    <IoTrashSharp /> Delete exercise
                 </button>
             </div>
 
@@ -147,7 +147,7 @@ export default function Page() {
                 })}
             </ol>
 
-            {practiceItems.length === 0 ? <h2>There are no routines</h2> : null}
+            {practiceItems.length === 0 ? <h2>There are no exercises</h2> : null}
         </header>
 
         {practiceItem ?
