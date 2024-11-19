@@ -21,6 +21,10 @@ function getDefaultPracticeItem() {
     return {title: 'My routine', beats: 4, bpm: 120};
 }
 
+function getPracticeItemId(idx: number, item: PracticeItem) {
+    return `${idx}-${encodeURIComponent(item.title)}`
+}
+
 type PracticeItemViewProps = {
     item: PracticeItem,
     setItem: (item: PracticeItem) => void,
@@ -98,11 +102,21 @@ export default function Page() {
         setCurrentPracticeItem(currentPracticeItem + 1);
     }, [currentPracticeItem, setCurrentPracticeItem]);
 
-    useEffect(() => {
+    useEffect(function stopPlayingIfLastPracticeItemDeleted() {
         if (play && practiceItems.length === 0) {
             setPlay(false);
         }
     }, [play, setPlay, practiceItems]);
+
+    useEffect(function scrollToPracticeItemTitle() {
+        if (!practiceItem) return;
+        const practiceItemId = getPracticeItemId(currentPracticeItem, practiceItem);
+        const practiceItemEl = document.getElementById(practiceItemId)
+        if (practiceItemEl) {
+            const parentEl = practiceItemEl.parentElement;
+            parentEl?.scroll(practiceItemEl.offsetLeft, 0);
+        }
+    }, [currentPracticeItem, practiceItems, practiceItem]);
 
     return <div className={styles.practicePage}>
         <header>
@@ -119,10 +133,11 @@ export default function Page() {
                 </button>
             </div>
 
-            <ol className={`flex flex-wrap ${styles.practiceItems}`}>
+            <ol className={`flex ${styles.practiceItems}`}>
                 {practiceItems.map((practiceItem, idx) => {
                     const isCurrent = idx === currentPracticeItem;
-                    return <li key={idx} className={isCurrent ? styles.current : ''}>
+                    const id = getPracticeItemId(idx, practiceItem);
+                    return <li id={id} key={id} className={isCurrent ? styles.current : ''}>
                         <button onClick={() => setCurrentPracticeItem(idx)}>
                             {isCurrent ?
                                 <h2>{practiceItem.title}</h2> :

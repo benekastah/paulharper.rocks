@@ -7,11 +7,15 @@
 }
 
 .practiceItems {
+    position: relative;
     align-items: baseline;
+    width: 100%;
+    overflow-x: scroll;
 }
 
 .practiceItems li {
     margin-right: 10px;
+    white-space: nowrap;
 }
 
 .practiceItems h1,
