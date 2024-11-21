@@ -130,6 +130,10 @@ button:disabled svg {
   fill: rgb(var(--accent-color-1));
 }
 
+#mainHeader {
+  align-items: baseline;
+}
+
 #navDropdown {
   display: none;
 }
@@ -137,7 +141,7 @@ button:disabled svg {
   display: flex;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 900px) {
   #navDropdown {
     display: block;
   }

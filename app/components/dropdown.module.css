@@ -1,4 +1,8 @@
 
+.dropdown {
+    position: relative;
+}
+
 .dropdown .menu {
     position: absolute;
     z-index: 1000;

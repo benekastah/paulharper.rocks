@@ -30,8 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="my-5">
-          <h1>paulharper.rocks</h1>
+        <header id="mainHeader" className="my-5 flex">
+          <h1 className="flex-grow">paulharper.rocks</h1>
 
           <div id="navDropdown">
             <Dropdown target={<IoMenuSharp />}>
