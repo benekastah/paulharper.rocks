@@ -20,6 +20,7 @@ type WorkerState = {
 
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     const worker = useRef<Worker | null>(null);
+    const wakeLockSentinel = useRef<WakeLockSentinel | null>(null);
     const [workerState, setWorkerState] = useState<WorkerState>({play, beats, bpm});
     const [beatNumber, setBeatNumber] = useState<number>(0);
     const clickHi = useRef<Howl>(new Howl({
@@ -39,6 +40,22 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
             worker.current = null;
         };
     }, []);
+
+    useEffect(() => {
+        if (play) {
+            if (!wakeLockSentinel.current) {
+                if (!navigator.wakeLock) return;
+                navigator.wakeLock.request('screen').then((wls) => {
+                    wakeLockSentinel.current = wls;
+                }).catch((err) => {
+                    console.error(`Unable to suspend wake lock: ${err.name}, ${err.message}`);
+                });
+            }
+        } else {
+            wakeLockSentinel.current?.release();
+            wakeLockSentinel.current = null;
+        }
+    }, [play]);
 
     useEffect(() => {
         function getNextWorkerState() {
