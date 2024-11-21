@@ -6,10 +6,10 @@
 - [ ] #feature look into using indexedDB as an alternate storage layer
 - [ ] #idea instead of forms, use contenteditable for editing details
 - [ ] #bug sometimes audio context doesn't seem to start
-- [ ] #bug don't update metronome on every keystroke in metronome config
 - [ ] #feature add find notes as practice item type
 - [x] #feature add link to practice page
 - [x] #bug Wording is wrong re routine. The routine should be the collection of practice items. An individual practice item should be called an exersize
 - [x] #bug On #mobile you can click next past the end of the list
 - [x] #bug exersize links need better separation
 - [x] #bug links look odd on #mobile, need hamburger menu instead
+- [x] #bug don't update metronome on every keystroke in metronome config
