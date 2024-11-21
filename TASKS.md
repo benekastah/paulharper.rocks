@@ -1,6 +1,6 @@
 - [ ] #bug #mobile Audio playback becomes unreliable on practice page after like 10 minutes
 - [ ] #feature Way to reorder practice items
-- [ ] #feature Build a library of exersizes and routines
+- [ ] #idea Build a library of exersizes and routines
 - [ ] #feature Way to save and load routines to/from a file
 - [ ] #feature multiple routines
 - [ ] #feature look into using indexedDB as an alternate storage layer
