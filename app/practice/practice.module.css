@@ -6,19 +6,19 @@
     vertical-align: baseline;
 }
 
-.practiceItems {
+.exercises {
     position: relative;
     align-items: baseline;
     width: 100%;
     overflow-x: auto;
 }
 
-.practiceItems li {
+.exercises li {
     white-space: nowrap;
 }
 
-.practiceItems h1,
-.practiceItems h2 {
+.exercises h1,
+.exercises h2 {
     margin: 0;
 }
 
