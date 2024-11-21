@@ -3,6 +3,9 @@ import formStyles from '../forms.module.css';
 import styles from './metronome.module.css';
 import Input from "../components/Input";
 
+const MIN_SPEED = 30;
+const MAX_SPEED = 300;
+
 type Props = {
     beats: number,
     setBeats: (beats: number) => void,
@@ -24,7 +27,7 @@ export function MetronomeConfig({beats, setBeats, bpm, setBpm}: Props) {
         <div className={formStyles.inputRow}>
             <label htmlFor="bpmInput">BPM</label>
             <p className={formStyles.helptext}>How fast the tempo is in beats per minute.</p>
-            <Input id="bpmInput" type="number" value={bpm || ''} onInput={onBpmChange} />
+            <Input id="bpmInput" type="range" min={MIN_SPEED} max={MAX_SPEED} value={bpm} onInput={onBpmChange} />
         </div>
     </div>;
 }
