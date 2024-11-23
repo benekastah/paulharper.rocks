@@ -79,28 +79,33 @@ export default function Page() {
 
     return <div>
         {!routine ?
-            <header>
-                <h1>Routines</h1>
+            <div>
+                <header>
+                    <h1>Routines</h1>
 
-                <div className={styles.buttonToolbar}>
-                    <button onClick={insertRoutine}>
-                        <IoAddSharp /> New routine
-                    </button>
-                    <button disabled={routines.length === 0} onClick={removeRoutine}>
-                        <IoTrashSharp /> Delete routine
-                    </button>
-                </div>
+                    <div className={styles.buttonToolbar}>
+                        <button onClick={insertRoutine}>
+                            <IoAddSharp /> New routine
+                        </button>
+                        <button disabled={routines.length === 0} onClick={removeRoutine}>
+                            <IoTrashSharp /> Delete routine
+                        </button>
+                    </div>
 
-                <ul>
-                    {routines.map((routine, id) =>
-                        <li key={id}>
-                            <a href={`?routine=${id}`}>{routine.title}</a>
-                        </li>
-                    )}
-                </ul>
+                    <ul>
+                        {routines.map((routine, id) =>
+                            <li key={id}>
+                                <a href={`?routine=${id}`}>{routine.title}</a>
+                            </li>
+                        )}
+                    </ul>
 
-                <h2>{routines.length ? 'No routine selected' : 'No routines yet'}</h2>
-            </header> :
+                </header>
+
+                <section>
+                    {!routines.length ? <h2>No routines yet</h2> : null}
+                </section>
+            </div> :
             <RoutineView
                 routine={routine} setRoutine={setRoutine}
             />}
