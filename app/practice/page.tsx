@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 import RoutineView, { Routine } from "./Routine";
 import useQueryParam from "../hooks/useQueryParam";
-import { IoAddSharp, IoTrashSharp } from "react-icons/io5";
+import { IoAddSharp, IoCreateSharp, IoTrashSharp } from "react-icons/io5";
 
 import styles from './practice.module.css';
 
@@ -43,6 +43,11 @@ export default function Page() {
     const [routines, setRoutines] = useLocalStorage<Routine[]>('Practice.routines', []);
     const [selectedRoutine, setSelectedRoutine] = useQueryParam<number>('routine', -1);
 
+    const [editMode, setEditMode] = useState(false);
+    const toggleEditMode = useCallback(() => {
+        return setEditMode(!editMode);
+    }, [editMode, setEditMode]);
+
     const routine: Routine | undefined = routines[selectedRoutine];
 
     const setRoutine = useCallback((routine: Routine) => {
@@ -57,16 +62,14 @@ export default function Page() {
         setRoutines(nextRoutines);
     }, [routines, setRoutines, selectedRoutine]);
 
-    const removeRoutine = useCallback(() => {
-        if (confirm("Are you sure you want to delete this routine?")) {
+    const removeRoutine = useCallback((idx: number) => {
+        const toDelete = routines[idx];
+        if (toDelete && confirm(`Are you sure you want to delete the routine "${toDelete.title}"?`)) {
             const nextRoutines = [...routines];
-            nextRoutines.splice(selectedRoutine, 1);
+            nextRoutines.splice(idx, 1);
             setRoutines(nextRoutines);
-            if (nextRoutines.length >= selectedRoutine) {
-                setSelectedRoutine(nextRoutines.length - 1);
-            }
         }
-    }, [selectedRoutine, setSelectedRoutine, routines, setRoutines]);
+    }, [routines, setRoutines]);
 
     useEffect(() => {
         migrateLocalStorage(
@@ -77,37 +80,44 @@ export default function Page() {
             });
     }, [routines, setRoutine, selectedRoutine]);
 
-    return <div>
-        {!routine ?
-            <div>
-                <header>
-                    <h1>Routines</h1>
+    useEffect(() => {
+        if (routines.length === 0 && editMode) {
+            setEditMode(false);
+        }
+    }, [editMode, setEditMode, routines]);
 
-                    <div className={styles.buttonToolbar}>
-                        <button onClick={insertRoutine}>
-                            <IoAddSharp /> New routine
-                        </button>
-                        <button disabled={routines.length === 0} onClick={removeRoutine}>
-                            <IoTrashSharp /> Delete routine
-                        </button>
-                    </div>
+    if (routine) {
+        return <RoutineView routine={routine} setRoutine={setRoutine} />;
+    }
 
-                    <ul>
-                        {routines.map((routine, id) =>
-                            <li key={id}>
-                                <a href={`?routine=${id}`}>{routine.title}</a>
-                            </li>
-                        )}
-                    </ul>
+    return <div className={styles.routinesPage}>
+        <header>
+            <h1>Routines</h1>
 
-                </header>
+            <div className={`${styles.buttonToolbar} flex`}>
+                <button className="flex-grow text-left" onClick={insertRoutine}>
+                    <IoAddSharp /> New routine
+                </button>
+                <button onClick={toggleEditMode}>
+                    <IoCreateSharp />
+                    {editMode ? 'Stop edit' : 'Edit'}
+                </button>
+            </div>
+        </header>
 
-                <section>
-                    {!routines.length ? <h2>No routines yet</h2> : null}
-                </section>
-            </div> :
-            <RoutineView
-                routine={routine} setRoutine={setRoutine}
-            />}
+        <section className="mt-4">
+            {!routines.length ?
+                <h2>No routines yet</h2> :
+                null}
+
+            <ul className={styles.routines}>
+                {routines.map((routine, id) =>
+                    <li key={id} className="flex m-4">
+                        <a className="flex-grow" href={`?routine=${id}`}>{routine.title}</a>
+                        {editMode ? <button onClick={() => removeRoutine(id)}><IoTrashSharp /></button> : null}
+                    </li>
+                )}
+            </ul>
+        </section>
     </div>
 }

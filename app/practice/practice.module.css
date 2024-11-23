@@ -1,7 +1,9 @@
+.routinesPage button svg,
 .practicePage button svg {
     display: inline;
 }
 
+.routinesPage button *,
 .practicePage button * {
     vertical-align: baseline;
 }
