@@ -8,6 +8,7 @@ import Metronome from "../metronome/Metronome";
 import Transport from "../transport/Transport";
 import { IoAddSharp, IoTrashSharp } from "react-icons/io5";
 import Input from "../components/Input";
+import useQueryParam from "../hooks/useQueryParam";
 
 export type Exercise = {
     title: string,
@@ -60,12 +61,12 @@ export type Routine = {
 
 type RoutineViewProps = {
     routine: Routine,
-    setRoutine: (routine: Routine) => void
-    currentExercise: number,
-    setCurrentExercise: (currentExercise: number) => void,
+    setRoutine: (routine: Routine) => void,
 };
 
-export default function RoutineView({routine, setRoutine, currentExercise, setCurrentExercise}: RoutineViewProps) {
+export default function RoutineView({routine, setRoutine}: RoutineViewProps) {
+    const [currentExercise, setCurrentExercise] = useQueryParam<number>('exercise', -1);
+
     const title = routine.title;
     const setTitle = useCallback((title: string) => {
         const nextRoutine = {...routine, title};
@@ -143,20 +144,21 @@ export default function RoutineView({routine, setRoutine, currentExercise, setCu
             const min = 0;
             const max = exercises.length - 1;
             if (currentExercise < min) {
-                setCurrentExercise(min)
+                setCurrentExercise(min, true)
             } else if (currentExercise > max) {
-                setCurrentExercise(max);
+                setCurrentExercise(max, true);
             }
         } else {
             const expectedCurrentExercise = -1;
             if (currentExercise !== expectedCurrentExercise) {
-                setCurrentExercise(expectedCurrentExercise);
+                setCurrentExercise(expectedCurrentExercise, true);
             }
         }
     }, [currentExercise, setCurrentExercise, exercises]);
 
     return <div className={styles.practicePage}>
         <header>
+            <a href="/practice">Back to routines</a>
             <h1>{title}</h1>
         </header>
 
