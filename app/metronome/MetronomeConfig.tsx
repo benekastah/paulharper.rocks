@@ -21,7 +21,7 @@ function BPMInput({id, value, onChange}: BPMInputProps) {
 
     const onInput = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
         onChange(Number(ev.target.value));
-    }, []);
+    }, [onChange]);
 
     return <div className={`flex ${styles.bpmInput}`}>
         <button onClick={removeOne}><IoRemoveSharp /></button>

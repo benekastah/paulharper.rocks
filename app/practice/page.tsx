@@ -78,7 +78,7 @@ export default function Page() {
                 const nextRoutines = [{title, exercises}, ...routines];
                 setRoutines(nextRoutines);
             });
-    }, [routines, setRoutine, selectedRoutine]);
+    }, [routines, setRoutine, selectedRoutine, setRoutines]);
 
     useEffect(() => {
         if (routines.length === 0 && editMode) {
