@@ -1,4 +1,3 @@
-
 .metronome {
   font-family: 'Courier New', Courier, monospace;
 }
@@ -21,11 +20,11 @@
 }
 
 .beatList li.muteButton {
-    display: inline-block;
+  display: inline-block;
 }
 
 .beatList li.muteButton button {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .beat {
@@ -39,11 +38,24 @@
 }
 
 .metronomePage {
-    text-align: center;
+  text-align: center;
 }
 
 .metronomeConfig {
-    text-align: left;
-    max-width: var(--form-width);
-    margin: 0 auto;
+  text-align: left;
+  max-width: var(--form-width);
+  margin: 0 auto;
+}
+
+.bpmInput button {
+  font-size: 30px;
+  display: inline;
+}
+
+.bpmInput button * {
+  vertical-align: middle;
+}
+
+.bpmInput input {
+  margin-top: 5px;
 }
