@@ -5,7 +5,6 @@ export default function useQueryParam<T>(param: string, defaultValue: T): [T, (v
     const [queryParams, setQueryParams] = useQueryParams();
 
     const setQueryParam = useCallback((value: T, replace?: boolean) => {
-        debugger;
         const stringValue = JSON.stringify(value);
         if (stringValue !== queryParams.get(param)) {
             queryParams.set(param, stringValue);
