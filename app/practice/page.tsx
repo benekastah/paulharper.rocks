@@ -20,8 +20,7 @@ function migrateLocalStorage(keys: string[], action: (values: any[]) => void) {
     for (const key of keys) {
         try {
             const localValue = localStorage.getItem(key);
-            if (localValue == null) return;
-            values.push(JSON.parse(localValue));
+            values.push(JSON.parse(localValue || 'null'));
         } catch (e) {
             console.error('Migration failure: ', e);
             return;
@@ -36,7 +35,9 @@ function migrateLocalStorage(keys: string[], action: (values: any[]) => void) {
         }
     }
 
-    action(values);
+    if (values.some(value => value !== null)) {
+        action(values);
+    }
 }
 
 export default function Page() {
@@ -75,7 +76,7 @@ export default function Page() {
         migrateLocalStorage(
             ['Practice.routineTitle', 'Practice.practiceItems', 'Practice.currentPracticeItem'],
             ([title, exercises, currentPracticeItem]) => {
-                const nextRoutines = [{title, exercises}, ...routines];
+                const nextRoutines = [{title: title || 'Practice', exercises: exercises || []}, ...routines];
                 setRoutines(nextRoutines);
             });
     }, [routines, setRoutine, selectedRoutine, setRoutines]);
