@@ -24,6 +24,10 @@
     margin: 0;
 }
 
+.practicePage h1 input {
+    width: 100%;
+}
+
 .titleForm {
     max-width: var(--form-width);
     margin: 0 auto;

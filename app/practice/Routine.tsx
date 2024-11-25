@@ -159,7 +159,7 @@ export default function RoutineView({routine, setRoutine}: RoutineViewProps) {
     return <div className={styles.practicePage}>
         <header>
             <a href="/practice">Back to routines</a>
-            <h1>{title}</h1>
+            <h1><Input type="text" value={title} onChange={(ev) => setTitle(ev.target.value)} /></h1>
         </header>
 
         <header>
