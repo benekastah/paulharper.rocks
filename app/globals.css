@@ -150,6 +150,6 @@ button:disabled svg {
   }
 
   #navDropdown nav {
-
+    white-space: nowrap;
   }
 }
