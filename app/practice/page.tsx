@@ -44,6 +44,8 @@ export default function Page() {
     const [routines, setRoutines] = useLocalStorage<Routine[]>('Practice.routines', []);
     const [selectedRoutine, setSelectedRoutine] = useQueryParam<number>('routine', -1);
 
+    const unsetSelectedRoutine = useCallback(() => setSelectedRoutine(undefined), [setSelectedRoutine]);
+
     const [editMode, setEditMode] = useState(false);
     const toggleEditMode = useCallback(() => {
         return setEditMode(!editMode);
@@ -88,7 +90,7 @@ export default function Page() {
     }, [editMode, setEditMode, routines]);
 
     if (routine) {
-        return <RoutineView routine={routine} setRoutine={setRoutine} />;
+        return <RoutineView routine={routine} setRoutine={setRoutine} onCloseRoutine={unsetSelectedRoutine} />;
     }
 
     return <div className={styles.routinesPage}>
@@ -114,7 +116,7 @@ export default function Page() {
             <ul className={styles.routines}>
                 {routines.map((routine, id) =>
                     <li key={id} className="flex m-4">
-                        <a className="flex-grow" href={`?routine=${id}`}>{routine.title}</a>
+                        <a className="flex-grow" onClick={(ev) => setSelectedRoutine(id)}>{routine.title}</a>
                         {editMode ? <button onClick={() => removeRoutine(id)}><IoTrashSharp /></button> : null}
                     </li>
                 )}

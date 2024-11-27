@@ -62,9 +62,10 @@ export type Routine = {
 type RoutineViewProps = {
     routine: Routine,
     setRoutine: (routine: Routine) => void,
+    onCloseRoutine: () => void,
 };
 
-export default function RoutineView({routine, setRoutine}: RoutineViewProps) {
+export default function RoutineView({routine, setRoutine, onCloseRoutine}: RoutineViewProps) {
     const [currentExercise, setCurrentExercise] = useQueryParam<number>('exercise', -1);
 
     const title = routine.title;
@@ -158,7 +159,7 @@ export default function RoutineView({routine, setRoutine}: RoutineViewProps) {
 
     return <div className={styles.practicePage}>
         <header>
-            <a href="/practice">Back to routines</a>
+            <a onClick={onCloseRoutine}>Back to routines</a>
             <h1><Input type="text" value={title} onChange={(ev) => setTitle(ev.target.value)} /></h1>
         </header>
 

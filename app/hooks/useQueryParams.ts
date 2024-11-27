@@ -27,7 +27,7 @@ export default function useQueryParams(): [URLSearchParams, (search: QueryParams
             history.pushState(null, '', searchString);
         }
         setQueryParams(searchString);
-    }, []);
+    }, [setQueryParams]);
 
     return [new URLSearchParams(queryParams), _setQueryParams];
 };
