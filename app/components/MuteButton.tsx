@@ -1,4 +1,4 @@
-import styles from './noteTrainer.module.css';
+import styles from './muteButton.module.css';
 import { Howler } from 'howler';
 import { IoVolumeHighSharp, IoVolumeMuteSharp } from "react-icons/io5";
 import { useCallback, useEffect, useState } from "react";

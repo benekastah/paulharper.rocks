@@ -1,5 +1,5 @@
-import { Accidental, Note, getRandomNote } from "./Note";
-import { selectRandom } from "./util";
+import { Accidental, Note, getRandomNote } from "./notes";
+import { selectRandom } from "./random";
 
 export enum ChordType {
     Major = "",

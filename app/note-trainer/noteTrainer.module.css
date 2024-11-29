@@ -33,85 +33,11 @@ details.settings summary h3 {
   display: inline;
 }
 
-.content .randomTrainer {
-  margin: auto;
-  text-align: center;
-  display: flex;
-  flex: auto;
-  flex-direction: column;
-  align-items: center;
-}
-
 .controls {
   align-items: center;
   margin: 10px 0 0 0;
 }
 
-.mute, .unmute {
-  font-size: 40px;
-  margin-left: 20px;
-  margin-right: 10px;
-  margin: 0 0 2px 20px;
-}
-
 .mainPage > * {
   width: 100%;
-}
-
-.noteCircles {
-  position: relative;
-  overflow: hidden;
-  width: 200px;
-  height: 310px;
-  margin: 10px;
-}
-
-.noteCircle, .chordCircle {
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
-  border-radius: 50px;
-  background-color: rgb(var(--accent-color-1));
-  text-align: center;
-  font-size: 40px;
-
-  position: absolute;
-  transition: all .2s ease-in;
-}
-.chordCircle {
-  font-size: 25px;
-}
-
-.noteCircle.index-0,
-.chordCircle.index-0 {
-  top: -100px;
-  left: 50px;
-}
-
-.noteCircle.index-1,
-.chordCircle.index-1 {
-  top: 0px;
-  left: 50px;
-}
-
-.noteCircle.index-2,
-.chordCircle.index-2 {
-  top: 110px;
-  left: 0px;
-
-  width: 200px;
-  height: 200px;
-  line-height: 200px;
-  border-radius: 100px;
-  background-color: rgb(var(--accent-color-2));
-  font-size: 80px;
-}
-.chordCircle.index-2 {
-  font-size: 50px;
-}
-
-.noteCircle.index-3,
-.chordCircle.index-3 {
-  top: 320px;
-  left: 50px;
 }

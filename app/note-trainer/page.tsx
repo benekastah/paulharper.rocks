@@ -1,14 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Accidental, getAccidentalByName, getRandomNote, Note } from "./Note";
-import RandomTrainer from "./RandomTrainer";
+import { Accidental, getAccidentalByName, getRandomNote, Note } from "../util/notes";
+import RandomTrainer from "../components/RandomTrainer";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { Chord, ChordType, getChordTypeByName, getRandomChord } from "./Chord";
+import { Chord, ChordType, getChordTypeByName, getRandomChord } from "../util/chords";
 import { MetronomeConfig } from "../metronome/MetronomeConfig";
-import { DoublyLinkedList } from "./DoublyLinkedList";
-import NoteCircle from "./NoteCircle";
-import ChordCircle from "./ChordCircle";
+import { DoublyLinkedList } from "../util/doublyLinkedLists";
+import NoteCircle from "../components/NoteCircle";
+import ChordCircle from "../components/ChordCircle";
 
 import styles from "./noteTrainer.module.css";
 import formStyles from "../forms.module.css";

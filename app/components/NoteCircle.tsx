@@ -1,5 +1,5 @@
-import { Note } from "./Note";
-import styles from "./noteTrainer.module.css";
+import { Note } from "../util/notes";
+import styles from "./noteCircle.module.css";
 
 type Props = {
     note: Note,

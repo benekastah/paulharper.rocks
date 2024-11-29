@@ -1,9 +1,9 @@
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import Metronome from "../metronome/Metronome";
 import Transport from "../transport/Transport";
-import { DoublyLinkedList } from "./DoublyLinkedList";
-import * as linkedList from "./DoublyLinkedList"
-import styles from "./noteTrainer.module.css";
+import { DoublyLinkedList } from "../util/doublyLinkedLists";
+import * as linkedList from "../util/doublyLinkedLists"
+import styles from "./randomTrainer.module.css";
 
 type Props<T> = {
     generator: () => T

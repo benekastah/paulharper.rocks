@@ -1,4 +1,4 @@
-import {selectRandom} from './util';
+import {selectRandom} from './random';
 
 export enum NoteName {
     A = 'A',

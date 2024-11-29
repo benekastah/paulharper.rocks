@@ -1,0 +1,16 @@
+.randomTrainer {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+.noteCircles {
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  height: 310px;
+  margin: 10px;
+}

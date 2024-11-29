@@ -3,7 +3,7 @@ import { Howl } from 'howler';
 import _ from 'lodash';
 
 import styles from './metronome.module.css';
-import MuteButton from "../note-trainer/MuteButton";
+import MuteButton from "../components/MuteButton";
 
 type Props = {
     play: boolean,
