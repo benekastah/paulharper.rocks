@@ -2,10 +2,10 @@
 const START = 'START';
 const STOP = 'STOP';
 
-let timerId = 0;
+let intervalId = 0;
 
 function start(message) {
-    clearTimeout(timerId);
+    clearInterval(intervalId);
 
     let start = Number(new Date());
 
@@ -19,17 +19,19 @@ function start(message) {
 
         if (lastHalfBeat < halfBeat) {
             lastHalfBeat = halfBeat;
-            self.postMessage(lastHalfBeat % (message.beats * 2));
+            self.postMessage({
+                halfBeat: lastHalfBeat % (message.beats * 2),
+                deadline: Number(new Date()) + 30,
+            });
         }
-
-        timerId = setTimeout(onTick, 1);
     };
 
     onTick();
+    intervalId = setInterval(onTick, 1);
 };
 
 function stop() {
-    clearTimeout(timerId);
+    clearInterval(intervalId);
 }
 
 self.onmessage = function (event) {

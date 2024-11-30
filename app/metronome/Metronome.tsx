@@ -77,21 +77,24 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         if (!worker.current) throw new Error('unreachable');
 
         worker.current.onmessage = (ev) => {
-            setBeatNumber(ev.data);
+            const {halfBeat, deadline}: {halfBeat: number, deadline: number} = ev.data;
+            const now = Number(new Date());
+            if (now >= deadline) return;
+            setBeatNumber(halfBeat);
             const nextWorkerState = getNextWorkerState();
             // If bpm or beat have changed, restart the session
             if (!_.isEqual(workerState, nextWorkerState)) {
                 startMetronome();
                 return;
             }
-            if (ev.data % 2 === 0) {
-                if (ev.data === 0) {
+            if (halfBeat % 2 === 0) {
+                if (halfBeat === 0) {
                     clickHi.current.play();
                 } else {
                     clickLo.current.play();
                 }
             }
-            if (onHalfBeat) onHalfBeat(ev.data);
+            if (onHalfBeat) onHalfBeat(halfBeat);
         };
 
         if (!_.isEqual(workerState, nextWorkerState)) {
