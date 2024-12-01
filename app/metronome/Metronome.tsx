@@ -1,10 +1,8 @@
-import { Howl } from 'howler';
 import WavEncoder from 'wav-encoder';
-import { isEqual, times } from 'lodash';
-import { useCallback, useEffect, useRef, useState } from "react";
+import { times } from 'lodash';
+import { useEffect, useRef, useState } from "react";
 
 import styles from './metronome.module.css';
-import MuteButton from "../components/MuteButton";
 import useWakeLock from '../hooks/useWakeLock';
 
 const CANCELED = {CANCELED: true};
@@ -16,10 +14,11 @@ type Props = {
     onHalfBeat?: (halfBeat: number) => void,
 };
 
-type WorkerState = {
-    play: boolean,
+type State = {
     beats: number,
     bpm: number,
+    nodePromise: Promise<AudioBufferSourceNode>,
+    timeoutId?: ReturnType<typeof setTimeout>,
 };
 
 let AUDIO_CONTEXT: AudioContext | null = null;
@@ -87,35 +86,34 @@ async function createLoopableMetronomeSourceNode(beats: number, bpm: number): Pr
     return source;
 }
 
-type State = {
-    beats: number,
-    bpm: number,
-    nodePromise: Promise<AudioBufferSourceNode>,
-    timeoutId?: ReturnType<typeof setTimeout>,
-};
-
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     useWakeLock(play);
 
-    const [beatNumber, setBeatNumber] = useState<number>(0);
+    const [halfBeatNumber, setHalfBeatNumber] = useState<number>(0);
     const startedClickTrackNode = useRef<AudioBufferSourceNode | null>(null);
     const state = useRef<State | null>(null);
 
+    const playStart = useRef<number>(-1);
     useEffect(() => {
         const msPerHalfBeat = ((1 / (bpm / 60)) * 1000) / 2;
         if (play) {
-            const intervalId = setInterval(() => {
-                setBeatNumber((beatNumber + 1) % (beats * 2));
-            }, msPerHalfBeat);
+            if (playStart.current === -1) {
+                playStart.current = Date.now();
+            }
+            const nextBeatAt = playStart.current + ((halfBeatNumber + 1) * msPerHalfBeat);
+            const timeoutId = setTimeout(() => {
+                setHalfBeatNumber(halfBeatNumber + 1);
+            }, nextBeatAt - Date.now());
             return () => {
-                clearInterval(intervalId);
+                clearTimeout(timeoutId);
             }
         } else {
-            if (beatNumber) {
-                setBeatNumber(0);
+            playStart.current = -1;
+            if (halfBeatNumber) {
+                setHalfBeatNumber(0);
             }
         }
-    });
+    }, [play, halfBeatNumber, setHalfBeatNumber]);
 
     function isPlaying() {
         return Boolean(startedClickTrackNode.current);
@@ -202,10 +200,9 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         <p>{bpm}bpm</p>
         <ol className={`flex ${styles.beatList}`}>
             {times(beats, (i) =>
-                <li key={i} className={`${styles.beat} ${i * 2 === beatNumber ? styles.active : ''}`}>
+                <li key={i} className={`${styles.beat} ${i * 2 === halfBeatNumber % (beats * 2) ? styles.active : ''}`}>
                     {i + 1}
                 </li>)}
-            <li className={styles.muteButton}><MuteButton /></li>
         </ol>
     </div>;
 }
