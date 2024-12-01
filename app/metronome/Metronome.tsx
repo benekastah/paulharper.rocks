@@ -14,12 +14,16 @@ type Props = {
     onHalfBeat?: (halfBeat: number) => void,
 };
 
-type State = {
+type AudioState = {
     beats: number,
     bpm: number,
     nodePromise: Promise<AudioBufferSourceNode>,
     timeoutId?: ReturnType<typeof setTimeout>,
 };
+
+type VisualState = {
+    playStart: number,
+}
 
 let AUDIO_CONTEXT: AudioContext | null = null;
 
@@ -90,17 +94,28 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     useWakeLock(play);
 
     const [halfBeatNumber, setHalfBeatNumber] = useState<number>(0);
+    const [playStart, setPlayStart] = useState(-1);
     const startedClickTrackNode = useRef<AudioBufferSourceNode | null>(null);
-    const state = useRef<State | null>(null);
+    const audioState = useRef<AudioState | null>(null);
+    const visualState = useRef<VisualState>({playStart});
 
-    const playStart = useRef<number>(-1);
     useEffect(() => {
         const msPerHalfBeat = (1 / (bpm / 60) * 1000) / 2;
-        if (play) {
-            if (playStart.current === -1) {
-                playStart.current = Date.now();
+        const prevState = {...visualState.current};
+
+        const _setHalfBeatNumber = (n: number) => {
+            if (halfBeatNumber !== n) {
+                setHalfBeatNumber(n);
             }
-            const nextBeatAt = playStart.current + ((halfBeatNumber + 1) * msPerHalfBeat);
+        };
+
+        if (playStart >= 0) {
+            if (prevState.playStart !== playStart) {
+                _setHalfBeatNumber(0);
+            }
+            visualState.current.playStart = playStart;
+
+            const nextBeatAt = playStart + ((halfBeatNumber + 1) * msPerHalfBeat);
             const timeoutId = setTimeout(() => {
                 setHalfBeatNumber(halfBeatNumber + 1);
             }, nextBeatAt - Date.now());
@@ -108,35 +123,36 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
                 clearTimeout(timeoutId);
             }
         } else {
-            playStart.current = -1;
-            if (halfBeatNumber) {
-                setHalfBeatNumber(0);
-            }
+            _setHalfBeatNumber(0);
         }
-    }, [play, halfBeatNumber, setHalfBeatNumber]);
+    }, [halfBeatNumber, setHalfBeatNumber, playStart, beats, bpm]);
 
     function isPlaying() {
         return Boolean(startedClickTrackNode.current);
     }
 
-    async function startClickTrack() {
-        const node = await state.current?.nodePromise;
+    async function startClickTrack(): Promise<boolean> {
+        const node = await audioState.current?.nodePromise;
         if (node && startedClickTrackNode.current !== node) {
             node.start(0);
             startedClickTrackNode.current = node;
+            return true;
         }
+        return false;
     }
 
-    async function stopClickTrack() {
-        const node = await state.current?.nodePromise;
+    async function stopClickTrack(): Promise<boolean> {
+        const node = await audioState.current?.nodePromise;
         if (node && startedClickTrackNode.current === node) {
             node.stop(0);
+            return true;
         }
         startedClickTrackNode.current = null;
+        return false;
     }
 
     useEffect(function buildAudioAndPlay() {
-        const prevState: State | null = state.current ? {...state.current} : null;
+        const prevState: AudioState | null = audioState.current ? {...audioState.current} : null;
 
         let canceled = false;
         let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined;
@@ -182,19 +198,25 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
                 nodePromise = getClickTrackPromise(false);
             }
             prevState?.nodePromise.then(node => node.disconnect());
-            state.current = { beats, bpm, timeoutId, nodePromise };
+            audioState.current = { beats, bpm, timeoutId, nodePromise };
         }
 
         if (play) {
-            startClickTrack();
+            startClickTrack().then((started: boolean) => {
+                if (started) {
+                    setPlayStart(Date.now());
+                }
+            });
         } else {
-            stopClickTrack();
+            stopClickTrack().then(() => {
+                setPlayStart(-1);
+            });
         }
 
         return () => {
             canceled = true;
         }
-    }, [play, beats, bpm]);
+    }, [play, beats, bpm, setPlayStart]);
 
     return <div className={styles.metronome}>
         <p>{bpm}bpm</p>
