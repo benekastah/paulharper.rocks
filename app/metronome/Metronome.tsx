@@ -23,6 +23,10 @@ type AudioState = {
 
 type VisualState = {
     playStart: number,
+    beats: number,
+    bpm: number,
+    halfBeatNumber: number,
+    intervalId?: ReturnType<typeof setInterval>,
 }
 
 let AUDIO_CONTEXT: AudioContext | null = null;
@@ -97,43 +101,65 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     const [playStart, setPlayStart] = useState(-1);
     const startedClickTrackNode = useRef<AudioBufferSourceNode | null>(null);
     const audioState = useRef<AudioState | null>(null);
-    const visualState = useRef<VisualState>({playStart});
+    const visualState = useRef<VisualState>({playStart, beats, bpm, halfBeatNumber});
 
-    useEffect(() => {
-        const msPerHalfBeat = (1 / (bpm / 60) * 1000) / 2;
+    useEffect(function manageHalfBeatNumber() {
         const prevState = {...visualState.current};
+        visualState.current = {bpm, beats, playStart, halfBeatNumber};
 
         const _setHalfBeatNumber = (n: number) => {
             if (halfBeatNumber !== n) {
                 setHalfBeatNumber(n);
             }
+            visualState.current.halfBeatNumber = n;
         };
+
+        const _clearInterval = () => {
+            if (prevState.intervalId) {
+                clearInterval(prevState.intervalId);
+            }
+        };
+
+        const getMsPerHalfBeat = () => {
+            return (1 / (visualState.current.bpm / 60) * 1000) / 2;
+        };
+
+        const getHalfBeat = () => {
+            const runtime = Date.now() - visualState.current.playStart;
+            return Math.floor(runtime / getMsPerHalfBeat());
+        }
 
         if (playStart >= 0) {
             if (prevState.playStart !== playStart) {
                 _setHalfBeatNumber(0);
             }
-            visualState.current.playStart = playStart;
 
-            const nextBeatAt = playStart + ((halfBeatNumber + 1) * msPerHalfBeat);
-            const timeoutId = setTimeout(() => {
-                setHalfBeatNumber(halfBeatNumber + 1);
-            }, nextBeatAt - Date.now());
-            return () => {
-                clearTimeout(timeoutId);
+            if (prevState.playStart !== playStart || prevState.bpm !== bpm || prevState.beats !== beats) {
+                const fps = 60;
+                _clearInterval();
+                visualState.current.intervalId = setInterval(() => {
+                    if (visualState.current.playStart >= 0) {
+                        const halfBeat = getHalfBeat();
+                        if (visualState.current.halfBeatNumber !== halfBeat) {
+                            _setHalfBeatNumber(halfBeat);
+                        }
+                    } else {
+                        _clearInterval();
+                    }
+                }, 1000 / fps);
             }
         } else {
             _setHalfBeatNumber(0);
         }
     }, [halfBeatNumber, setHalfBeatNumber, playStart, beats, bpm]);
 
-    useEffect(() => {
+    useEffect(function fireOnHalfBeat() {
         if (playStart > -1) {
             onHalfBeat && onHalfBeat(halfBeatNumber);
         }
     }, [halfBeatNumber, onHalfBeat, playStart])
 
-    function isPlaying() {
+    function clickTrackNodeIsPlaying() {
         return Boolean(startedClickTrackNode.current);
     }
 
@@ -198,7 +224,7 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
 
         if (bpm !== prevState?.bpm || beats !== prevState?.beats || !play) {
-            if (!play || !prevState || (play && !isPlaying())) {
+            if (!play || !prevState || (play && !clickTrackNodeIsPlaying())) {
                 nodePromise = getClickTrackPromise(true);
             } else {
                 nodePromise = getClickTrackPromise(false);
@@ -223,6 +249,14 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
             canceled = true;
         }
     }, [play, beats, bpm, setPlayStart]);
+
+    useEffect(function stopOnUnmount() {
+        return () => {
+            stopClickTrack().then(() => {
+                setPlayStart(-1);
+            });
+        }
+    }, []);
 
     return <div className={styles.metronome}>
         <p>{bpm}bpm</p>
