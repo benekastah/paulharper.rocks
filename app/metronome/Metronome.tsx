@@ -40,7 +40,7 @@ async function loadAudio(url: string): Promise<AudioBuffer> {
     return AUDIO_BUFFER_CACHE[url];
 }
 
-async function createLoopableMetronomeTrackURL(beats: number, bpm: number): Promise<string> {
+async function createLoopableMetronomeSourceNode(beats: number, bpm: number): Promise<AudioBufferSourceNode> {
     const [clickHiBuf, clickLoBuf] = await Promise.all([
         loadAudio('click_hi.wav'),
         loadAudio('click_lo.wav')
@@ -51,70 +51,48 @@ async function createLoopableMetronomeTrackURL(beats: number, bpm: number): Prom
     const lengthInSamples = lengthInSeconds * sampleRate;
     const samplesPerBeat = lengthInSamples / beats;
 
-    const data: [Float32Array, Float32Array] = [
-        new Float32Array(lengthInSamples),
-        new Float32Array(lengthInSamples)
-    ];
+    const data: [Float32Array, Float32Array] = generateData();
 
-    for (let b = 0; b < beats; b++) {
-        const startingSample = Math.round(b * samplesPerBeat);
-        const clickBuf = b === 0 ? clickHiBuf : clickLoBuf;
-        if (clickBuf.sampleRate !== sampleRate) {
-            throw new Error('Invalid sample rate: ' + clickBuf.sampleRate);
-        }
-        if (clickBuf.numberOfChannels !== data.length) {
-            throw new Error('Invalid number of channels: ' + clickBuf.numberOfChannels);
-        }
-        for (let c = 0; c < clickBuf.numberOfChannels; c++) {
-            const channel = clickBuf.getChannelData(c);
-            for (let s = 0; s < channel.length; s++) {
-                data[c][startingSample + s] += channel[s];
-            }
-        }
-    }
-
+    const audioCtx = getAudioContext();
     const result = await WavEncoder.encode({sampleRate: sampleRate, channelData: data});
-    const blob = new Blob([result], {type: 'audio/wav'});
+    const source = audioCtx.createBufferSource();
+    source.buffer = await audioCtx.decodeAudioData(result);
+    source.loop = true;
 
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onload = () => {
-            if (typeof reader.result === 'string') {
-                resolve(reader.result);
-            } else {
-                reject(reader.result);
+    source.connect(audioCtx.destination);
+    audioCtx.state
+
+    return source;
+
+    function generateData() {
+        const data: [Float32Array, Float32Array] = [
+            new Float32Array(lengthInSamples),
+            new Float32Array(lengthInSamples)
+        ];
+
+        for (let b = 0; b < beats; b++) {
+            const startingSample = Math.round(b * samplesPerBeat);
+            const clickBuf = b === 0 ? clickHiBuf : clickLoBuf;
+            if (clickBuf.sampleRate !== sampleRate) {
+                throw new Error('Invalid sample rate: ' + clickBuf.sampleRate);
             }
-        };
-    });
+            if (clickBuf.numberOfChannels !== data.length) {
+                throw new Error('Invalid number of channels: ' + clickBuf.numberOfChannels);
+            }
+            for (let c = 0; c < clickBuf.numberOfChannels; c++) {
+                const channel = clickBuf.getChannelData(c);
+                for (let s = 0; s < channel.length; s++) {
+                    data[c][startingSample + s] += channel[s];
+                }
+            }
+        }
+        return data;
+    }
 }
 
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     const wakeLockSentinel = useRef<WakeLockSentinel | null>(null);
     const [beatNumber, setBeatNumber] = useState<number>(0);
-
-    const [dataUrl, setDataUrl] = useState<string | null>(null);
-    const audioEl = useRef<HTMLAudioElement | null>(null);
-
-    const loopIntervalId = useRef<ReturnType<typeof setInterval> | null>(null);
-    const onLoop = useCallback(() => {
-        if (loopIntervalId.current !== null) {
-            clearInterval(loopIntervalId.current);
-        }
-        loopIntervalId.current = setInterval(() => {
-            setBeatNumber(beatNumber + 1);
-        }, (bpm / 60) * 1000)
-    }, [bpm, beatNumber, setBeatNumber]);
-
-    useEffect(() => {
-        createLoopableMetronomeTrackURL(beats, bpm).then(
-            (url: string) => setDataUrl(url),
-            (error) => {
-                console.error(error);
-                return null;
-            }
-        );
-    }, [beats, bpm, onLoop]);
 
     useEffect(() => {
         if (play) {
@@ -132,17 +110,40 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
     }, [play]);
 
+    const clickTrackNode = useRef<AudioBufferSourceNode | null>(null);
+    const startedClickTrackNode = useRef<AudioBufferSourceNode | null>(null);
+
+    function startClickTrack() {
+        if (startedClickTrackNode.current !== clickTrackNode.current) {
+            clickTrackNode.current?.start(0);
+            startedClickTrackNode.current = clickTrackNode.current;
+        }
+    }
+
+    function stopClickTrack() {
+        if (startedClickTrackNode.current === clickTrackNode.current) {
+            clickTrackNode.current?.stop(0);
+        }
+    }
+
     useEffect(() => {
-        if (!audioEl.current) {
-            return;
-        }
-        if (play) {
-            audioEl.current.play();
-        } else {
-            audioEl.current.pause();
-            audioEl.current.currentTime = 0;
-        }
-    }, [play]);
+        let canceled = false;
+
+        createLoopableMetronomeSourceNode(beats, bpm).then((sourceNode) => {
+            if (canceled) return;
+            clickTrackNode.current = sourceNode;
+            if (play) {
+                startClickTrack();
+            }
+        });
+
+        return () => {
+            canceled = true;
+            if (play) {
+                stopClickTrack();
+            }
+        };
+    }, [play, beats, bpm]);
 
     return <div className={styles.metronome}>
         <p>{bpm}bpm</p>
@@ -153,7 +154,5 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
                 </li>)}
             <li className={styles.muteButton}><MuteButton /></li>
         </ol>
-
-        {dataUrl ? <audio ref={audioEl} src={dataUrl} loop preload="auto" /> : null}
     </div>;
 }
