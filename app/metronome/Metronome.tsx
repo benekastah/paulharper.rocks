@@ -101,6 +101,22 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
     const startedClickTrackNode = useRef<AudioBufferSourceNode | null>(null);
     const state = useRef<State | null>(null);
 
+    useEffect(() => {
+        const msPerHalfBeat = ((1 / (bpm / 60)) * 1000) / 2;
+        if (play) {
+            const intervalId = setInterval(() => {
+                setBeatNumber((beatNumber + 1) % (beats * 2));
+            }, msPerHalfBeat);
+            return () => {
+                clearInterval(intervalId);
+            }
+        } else {
+            if (beatNumber) {
+                setBeatNumber(0);
+            }
+        }
+    });
+
     function isPlaying() {
         return Boolean(startedClickTrackNode.current);
     }
