@@ -95,7 +95,7 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
 
     const playStart = useRef<number>(-1);
     useEffect(() => {
-        const msPerHalfBeat = ((1 / (bpm / 60)) * 1000) / 2;
+        const msPerHalfBeat = (1 / (bpm / 60) * 1000) / 2;
         if (play) {
             if (playStart.current === -1) {
                 playStart.current = Date.now();
