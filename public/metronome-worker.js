@@ -7,13 +7,13 @@ let intervalId = 0;
 function start(message) {
     clearInterval(intervalId);
 
-    let start = Number(new Date());
+    let start = Date.now();
 
     const msPerHalfBeat = Math.round((60 * 1000) / (message.bpm * 2));
     let lastHalfBeat = -1;
 
     function onTick() {
-        const now = Number(new Date());
+        const now = Date.now();
         const delta = now - start;
         const halfBeat = Math.floor(delta / msPerHalfBeat)
 
@@ -21,7 +21,7 @@ function start(message) {
             lastHalfBeat = halfBeat;
             self.postMessage({
                 halfBeat: lastHalfBeat % (message.beats * 2),
-                deadline: Number(new Date()) + 30,
+                deadline: Date.now() + 30,
             });
         }
     };
