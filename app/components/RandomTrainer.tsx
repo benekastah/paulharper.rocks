@@ -78,10 +78,10 @@ export default function RandomTrainer<T>({ generator, beats, bpm, renderItem, pl
     }, [setCurrentNotes, getHead, getCurrentItems]);
 
     const onHalfBeat = useCallback((halfBeat: number) => {
-        if (halfBeat === 0) {
+        if (halfBeat % (beats * 2) === 0) {
             onSkipForward();
         }
-    }, [onSkipForward]);
+    }, [onSkipForward, beats]);
 
     useEffect(() => {
         notes.current = initializeNotes(null);

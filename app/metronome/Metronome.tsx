@@ -127,6 +127,12 @@ export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
         }
     }, [halfBeatNumber, setHalfBeatNumber, playStart, beats, bpm]);
 
+    useEffect(() => {
+        if (playStart > -1) {
+            onHalfBeat && onHalfBeat(halfBeatNumber);
+        }
+    }, [halfBeatNumber, onHalfBeat, playStart])
+
     function isPlaying() {
         return Boolean(startedClickTrackNode.current);
     }
