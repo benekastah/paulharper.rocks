@@ -5,6 +5,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from './metronome.module.css';
 import MuteButton from "../components/MuteButton";
+import useWakeLock from '../hooks/useWakeLock';
+
+const CANCELED = {CANCELED: true};
 
 type Props = {
     play: boolean,
@@ -51,7 +54,27 @@ async function createLoopableMetronomeSourceNode(beats: number, bpm: number): Pr
     const lengthInSamples = lengthInSeconds * sampleRate;
     const samplesPerBeat = lengthInSamples / beats;
 
-    const data: [Float32Array, Float32Array] = generateData();
+    const data: [Float32Array, Float32Array] = [
+        new Float32Array(lengthInSamples),
+        new Float32Array(lengthInSamples)
+    ];
+
+    for (let b = 0; b < beats; b++) {
+        const startingSample = Math.round(b * samplesPerBeat);
+        const clickBuf = b === 0 ? clickHiBuf : clickLoBuf;
+        if (clickBuf.sampleRate !== sampleRate) {
+            throw new Error('Invalid sample rate: ' + clickBuf.sampleRate);
+        }
+        if (clickBuf.numberOfChannels !== data.length) {
+            throw new Error('Invalid number of channels: ' + clickBuf.numberOfChannels);
+        }
+        for (let c = 0; c < clickBuf.numberOfChannels; c++) {
+            const channel = clickBuf.getChannelData(c);
+            for (let s = 0; s < channel.length; s++) {
+                data[c][startingSample + s] += channel[s];
+            }
+        }
+    }
 
     const audioCtx = getAudioContext();
     const result = await WavEncoder.encode({sampleRate: sampleRate, channelData: data});
@@ -60,89 +83,103 @@ async function createLoopableMetronomeSourceNode(beats: number, bpm: number): Pr
     source.loop = true;
 
     source.connect(audioCtx.destination);
-    audioCtx.state
 
     return source;
-
-    function generateData() {
-        const data: [Float32Array, Float32Array] = [
-            new Float32Array(lengthInSamples),
-            new Float32Array(lengthInSamples)
-        ];
-
-        for (let b = 0; b < beats; b++) {
-            const startingSample = Math.round(b * samplesPerBeat);
-            const clickBuf = b === 0 ? clickHiBuf : clickLoBuf;
-            if (clickBuf.sampleRate !== sampleRate) {
-                throw new Error('Invalid sample rate: ' + clickBuf.sampleRate);
-            }
-            if (clickBuf.numberOfChannels !== data.length) {
-                throw new Error('Invalid number of channels: ' + clickBuf.numberOfChannels);
-            }
-            for (let c = 0; c < clickBuf.numberOfChannels; c++) {
-                const channel = clickBuf.getChannelData(c);
-                for (let s = 0; s < channel.length; s++) {
-                    data[c][startingSample + s] += channel[s];
-                }
-            }
-        }
-        return data;
-    }
 }
 
+type State = {
+    beats: number,
+    bpm: number,
+    nodePromise: Promise<AudioBufferSourceNode>,
+    timeoutId?: ReturnType<typeof setTimeout>,
+};
+
 export default function Metronome({play, beats, bpm, onHalfBeat}: Props) {
-    const wakeLockSentinel = useRef<WakeLockSentinel | null>(null);
+    useWakeLock(play);
+
     const [beatNumber, setBeatNumber] = useState<number>(0);
-
-    useEffect(() => {
-        if (play) {
-            if (!wakeLockSentinel.current) {
-                if (!navigator.wakeLock) return;
-                navigator.wakeLock.request('screen').then((wls) => {
-                    wakeLockSentinel.current = wls;
-                }).catch((err) => {
-                    console.error(`Unable to suspend wake lock: ${err.name}, ${err.message}`);
-                });
-            }
-        } else {
-            wakeLockSentinel.current?.release();
-            wakeLockSentinel.current = null;
-        }
-    }, [play]);
-
-    const clickTrackNode = useRef<AudioBufferSourceNode | null>(null);
     const startedClickTrackNode = useRef<AudioBufferSourceNode | null>(null);
+    const state = useRef<State | null>(null);
 
-    function startClickTrack() {
-        if (startedClickTrackNode.current !== clickTrackNode.current) {
-            clickTrackNode.current?.start(0);
-            startedClickTrackNode.current = clickTrackNode.current;
+    function isPlaying() {
+        return Boolean(startedClickTrackNode.current);
+    }
+
+    async function startClickTrack() {
+        const node = await state.current?.nodePromise;
+        if (node && startedClickTrackNode.current !== node) {
+            node.start(0);
+            startedClickTrackNode.current = node;
         }
     }
 
-    function stopClickTrack() {
-        if (startedClickTrackNode.current === clickTrackNode.current) {
-            clickTrackNode.current?.stop(0);
+    async function stopClickTrack() {
+        const node = await state.current?.nodePromise;
+        if (node && startedClickTrackNode.current === node) {
+            node.stop(0);
         }
+        startedClickTrackNode.current = null;
     }
 
-    useEffect(() => {
+    useEffect(function buildAudioAndPlay() {
+        const prevState: State | null = state.current ? {...state.current} : null;
+
         let canceled = false;
+        let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined;
+        let nodePromise: Promise<AudioBufferSourceNode> | void;
 
-        createLoopableMetronomeSourceNode(beats, bpm).then((sourceNode) => {
-            if (canceled) return;
-            clickTrackNode.current = sourceNode;
-            if (play) {
-                startClickTrack();
+        function _clearTimeout() {
+            if (prevState?.timeoutId) {
+                clearTimeout(prevState.timeoutId);
             }
-        });
+        }
+
+        function getClickTrackPromise(now: boolean = false): Promise<AudioBufferSourceNode> {
+            return new Promise<AudioBufferSourceNode>(function (resolve, reject) {
+                _clearTimeout();
+                const action = () => {
+                    if (canceled) {
+                        reject(CANCELED);
+                        return;
+                    }
+                    createLoopableMetronomeSourceNode(beats, bpm).then((node) => {
+                        if (canceled) {
+                            reject(CANCELED);
+                        } else {
+                            prevState?.nodePromise.then(node => {
+                                node.disconnect();
+                            });
+                            resolve(node);
+                        } 
+                    }, reject);
+                };
+                if (now) {
+                    action();
+                } else {
+                    timeoutId = setTimeout(action, 300);
+                }
+            });
+        }
+
+        if (bpm !== prevState?.bpm || beats !== prevState?.beats || !play) {
+            if (!play || !prevState || (play && !isPlaying())) {
+                nodePromise = getClickTrackPromise(true);
+            } else {
+                nodePromise = getClickTrackPromise(false);
+            }
+            prevState?.nodePromise.then(node => node.disconnect());
+            state.current = { beats, bpm, timeoutId, nodePromise };
+        }
+
+        if (play) {
+            startClickTrack();
+        } else {
+            stopClickTrack();
+        }
 
         return () => {
             canceled = true;
-            if (play) {
-                stopClickTrack();
-            }
-        };
+        }
     }, [play, beats, bpm]);
 
     return <div className={styles.metronome}>
