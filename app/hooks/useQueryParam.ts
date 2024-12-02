@@ -6,8 +6,8 @@ export default function useQueryParam<T>(param: string, defaultValue: T): [T, (v
 
     const setQueryParam = useCallback((value: T | undefined, replace?: boolean) => {
         if (value === undefined) {
-            queryParams.delete(param);
             if (queryParams.has(param)) {
+                queryParams.delete(param);
                 setQueryParams(queryParams, replace);
             }
         } else {
