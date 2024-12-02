@@ -157,9 +157,14 @@ export default function RoutineView({routine, setRoutine, onCloseRoutine}: Routi
         }
     }, [currentExercise, setCurrentExercise, exercises]);
 
+    const backToRoutinesOnClick = useCallback((ev: React.MouseEvent<HTMLAnchorElement>) => {
+        ev.preventDefault();
+        onCloseRoutine();
+    }, [onCloseRoutine]);
+
     return <div className={styles.practicePage}>
         <header>
-            <a onClick={onCloseRoutine}>Back to routines</a>
+            <a href="?" onClick={backToRoutinesOnClick}>Back to routines</a>
             <h1><Input type="text" value={title} onChange={(ev) => setTitle(ev.target.value)} /></h1>
         </header>
 

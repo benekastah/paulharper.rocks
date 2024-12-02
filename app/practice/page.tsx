@@ -114,11 +114,16 @@ export default function Page() {
                 null}
 
             <ul className={styles.routines}>
-                {routines.map((routine, id) =>
-                    <li key={id} className="flex m-4">
-                        <a className="flex-grow" onClick={(ev) => setSelectedRoutine(id)}>{routine.title}</a>
+                {routines.map((routine, id) => {
+                    const onClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+                        ev.preventDefault();
+                        setSelectedRoutine(id);
+                    };
+                    return <li key={id} className="flex m-4">
+                        <a className="flex-grow" href={`?routine=${id}`} onClick={onClick}>{routine.title}</a>
                         {editMode ? <button onClick={() => removeRoutine(id)}><IoTrashSharp /></button> : null}
                     </li>
+                }
                 )}
             </ul>
         </section>
