@@ -9,6 +9,10 @@ import Transport from "../transport/Transport";
 import { IoAddSharp, IoTrashSharp } from "react-icons/io5";
 import Input from "../components/Input";
 import useQueryParam from "../hooks/useQueryParam";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import useSearchParam from "../hooks/useSearchParam";
+import Link from "next/link";
 
 export type Exercise = {
     title: string,
@@ -66,7 +70,7 @@ type RoutineViewProps = {
 };
 
 export default function RoutineView({routine, setRoutine, onCloseRoutine}: RoutineViewProps) {
-    const [currentExercise, setCurrentExercise] = useQueryParam<number>('exercise', -1);
+    const [currentExercise, setCurrentExercise] = useSearchParam<number>('exercise', -1);
 
     const title = routine.title;
     const setTitle = useCallback((title: string) => {
@@ -157,14 +161,9 @@ export default function RoutineView({routine, setRoutine, onCloseRoutine}: Routi
         }
     }, [currentExercise, setCurrentExercise, exercises]);
 
-    const backToRoutinesOnClick = useCallback((ev: React.MouseEvent<HTMLAnchorElement>) => {
-        ev.preventDefault();
-        onCloseRoutine();
-    }, [onCloseRoutine]);
-
     return <div className={styles.practicePage}>
         <header>
-            <a href="?" onClick={backToRoutinesOnClick}>Back to routines</a>
+            <Link href="/practice">Back to routines</Link>
             <h1><Input type="text" value={title} onChange={(ev) => setTitle(ev.target.value)} /></h1>
         </header>
 

@@ -4,10 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 import RoutineView, { Routine } from "./Routine";
-import useQueryParam from "../hooks/useQueryParam";
+import useSearchParam from "../hooks/useSearchParam";
 import { IoAddSharp, IoCreateSharp, IoTrashSharp } from "react-icons/io5";
 
 import styles from './practice.module.css';
+import Link from "next/link";
 
 function getDefaultRoutine() {
     return { title: 'My Routine', exercises: [] };
@@ -42,7 +43,7 @@ function migrateLocalStorage(keys: string[], action: (values: any[]) => void) {
 
 export default function Page() {
     const [routines, setRoutines] = useLocalStorage<Routine[]>('Practice.routines', []);
-    const [selectedRoutine, setSelectedRoutine] = useQueryParam<number>('routine', -1);
+    const [selectedRoutine, setSelectedRoutine] = useSearchParam<number>('routine', -1);
 
     const unsetSelectedRoutine = useCallback(() => setSelectedRoutine(undefined), [setSelectedRoutine]);
 
@@ -114,16 +115,11 @@ export default function Page() {
                 null}
 
             <ul className={styles.routines}>
-                {routines.map((routine, id) => {
-                    const onClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-                        ev.preventDefault();
-                        setSelectedRoutine(id);
-                    };
-                    return <li key={id} className="flex m-4">
-                        <a className="flex-grow" href={`?routine=${id}`} onClick={onClick}>{routine.title}</a>
+                {routines.map((routine, id) =>
+                    <li key={id} className="flex m-4">
+                        <Link href={`?routine=${id}`}>{routine.title}</Link>
                         {editMode ? <button onClick={() => removeRoutine(id)}><IoTrashSharp /></button> : null}
                     </li>
-                }
                 )}
             </ul>
         </section>
