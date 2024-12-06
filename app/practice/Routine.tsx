@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 import styles from "./practice.module.css";
 import formStyles from "../forms.module.css";
@@ -8,9 +7,6 @@ import Metronome from "../metronome/Metronome";
 import Transport from "../transport/Transport";
 import { IoAddSharp, IoTrashSharp } from "react-icons/io5";
 import Input from "../components/Input";
-import useQueryParam from "../hooks/useQueryParam";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 import useSearchParam from "../hooks/useSearchParam";
 import Link from "next/link";
 
