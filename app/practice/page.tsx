@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 import RoutineView, { Routine } from "./Routine";
@@ -41,7 +41,7 @@ function migrateLocalStorage(keys: string[], action: (values: any[]) => void) {
     }
 }
 
-export default function Page() {
+function PracticePage() {
     const [routines, setRoutines] = useLocalStorage<Routine[]>('Practice.routines', []);
     const [selectedRoutine, setSelectedRoutine] = useSearchParam<number>('routine', -1);
 
@@ -124,4 +124,10 @@ export default function Page() {
             </ul>
         </section>
     </div>
+}
+
+export default function Page() {
+    return <Suspense>
+        <PracticePage />
+    </Suspense>;
 }
