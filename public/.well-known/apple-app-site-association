@@ -1,0 +1,30 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": [
+                    "8Q6SXBGR9U.rocks.paulharper.reprise"
+                ],
+                "components": [
+                    {
+                        "#": "no_universal_links",
+                        "exclude": true,
+                        "comment": "Matches any URL with a fragment that equals no_universal_links and instructs the system not to open it as a universal link."
+                    },
+                    {
+                        "/": "/metronome",
+                        "comment": "Matches the /metronome path and instructs the system to open it as a universal link."
+                    },
+                    {
+                        "/": "/note-trainer",
+                        "comment": "Matches the /note-trainer path and instructs the system to open it as a universal link."
+                    },
+                    {
+                        "/": "/practice",
+                        "comment": "Matches the /practice path and instructs the system to open it as a universal link."
+                    }
+                ]
+            }
+        ]
+    }
+}
