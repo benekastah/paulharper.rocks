@@ -8,7 +8,7 @@ export default function Reprise() {
                 <img className={styles.dark} width="75" height="75" src="/img/logos/reprise-dark.png" />
                 Reprise
             </h1>
-            <p>Published <time datetime="2025-08-10">Sunday, August 10,
+            <p>Published <time dateTime="2025-08-10">Sunday, August 10,
             2025</time>.</p>
         </header>
 
