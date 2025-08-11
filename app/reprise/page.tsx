@@ -12,21 +12,21 @@ export default function Reprise() {
             2025</time>.</p>
         </header>
 
-        <p>Practicing music should feel rewarding. But too often, it’s messy —
+        <p>Practicing music should feel rewarding. But too often, it&apos;s messy —
         flipping between exercises, trying to remember your last tempo, or
-        losing track of what you planned to play. I’ve been there.</p>
+        losing track of what you planned to play. I&apos;ve been there.</p>
 
         <p>
-        I’m Paul Harper — guitarist, multi-instrumentalist, solo app developer,
+        I&apos;m Paul Harper — guitarist, multi-instrumentalist, solo app developer,
         and dad of two. Between family, work, and music, my practice time is
         precious. I wanted a tool that would help me make the most of it —
         simple, fast, and built for real musicians.
         </p>
 
-        <p>That’s why I made Reprise. It keeps your routines, tempos, and
+        <p>That&apos;s why I made Reprise. It keeps your routines, tempos, and
         exercises in one place, so you can focus on playing — not fiddling
         with settings. Open the app, tap your next exercise, and play.
-        That’s it. With Reprise, you can:</p>
+        That&apos;s it. With Reprise, you can:</p>
 
         <ul>
             <li>
@@ -46,7 +46,7 @@ export default function Reprise() {
         <p>Reprise is available now for iPhone. I built it for myself, but I
         hope it helps you, too.</p>
 
-        <p><strong>Don't just practice. Progress.</strong></p>
+        <p><strong>Don&apos;t just practice. Progress.</strong></p>
 
         <div id={styles.repriseScreenshot}>
             <img className={styles.light} width="350" height="auto"
