@@ -153,3 +153,21 @@ button:disabled svg {
     white-space: nowrap;
   }
 }
+
+article {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+article ul {
+    list-style: disc;
+}
+
+article ul li {
+    list-style-position: inside;
+}
+
+article p, ul, ol {
+    margin: 0 0 10px 0;
+}
