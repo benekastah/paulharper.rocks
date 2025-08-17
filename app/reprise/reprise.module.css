@@ -26,9 +26,20 @@
     }
 }
 
+#repriseArticle header {
+    margin-bottom: 30px;
+}
+
+.clearBoth {
+    clear: both;
+}
+
+#repriseLogo {
+    float: left;
+    margin-right: 10px;
+}
+
 #repriseScreenshot {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 350px;
+    float: right;
+    margin-left: 20px;
 }
