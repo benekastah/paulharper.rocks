@@ -1,3 +1,15 @@
+#reel {
+    float: right;
+    width: 50%;
+    padding-left: 15px;
+}
+
+#reprise {
+    float: left;
+    width: 50%;
+    padding-right: 15px;
+}
+
 ul.songs,
 ul.links {
     list-style-type: none;

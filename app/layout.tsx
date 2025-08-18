@@ -21,6 +21,7 @@ export default function RootLayout({
     <ul className="list-none">
       <li className="mr-3"><Link href="/">Home</Link></li>
       <li className="mr-3"><Link href="/about">About</Link></li>
+      <li className="mr-3"><Link href="/reprise">Reprise</Link></li>
       <li className="mr-3"><Link href="/metronome">Metronome</Link></li>
       <li className="mr-3"><Link href="/note-trainer">Note trainer</Link></li>
       <li className="mr-3"><Link href="/practice">Practice</Link></li>

@@ -11,6 +11,7 @@ type SongProps = {
   soundCloudUrl?: string,
 };
 
+
 function Song({title, byline, spotifyUrl, appleMusicUrl, youtubeUrl, soundCloudUrl}: SongProps) {
   return <li className={styles.song}>
     <header>
@@ -28,12 +29,12 @@ function Song({title, byline, spotifyUrl, appleMusicUrl, youtubeUrl, soundCloudU
             </a> :
             null}
           {youtubeUrl ?
-            <a target="_blank" href={appleMusicUrl}>
+            <a target="_blank" href={youtubeUrl}>
               <img src="/img/logos/youtube.png" width={30} height={30} alt="YouTube" />
             </a> :
             null}
           {soundCloudUrl ?
-            <a target="_blank" href={appleMusicUrl}>
+            <a target="_blank" href={soundCloudUrl}>
               <img src="/img/logos/soundcloud.jpg" width={30} height={30} alt="SoundCloud" />
             </a> :
             null}
@@ -48,9 +49,23 @@ function Song({title, byline, spotifyUrl, appleMusicUrl, youtubeUrl, soundCloudU
 export default function Home() {
   return (
     <>
-      <section>
+      <section id={styles.reel}>
         <h2>Reel</h2>
         <ul className={styles.songs}>
+          <Song
+            title="Real Strange"
+            byline="Written, produced, performed, recorded, and mixed by Paul Harper"
+            spotifyUrl="https://open.spotify.com/track/1irezkQZjaQG8PlpupCfSW?si=8dc07e5ae1254a2f"
+            appleMusicUrl="https://music.apple.com/us/album/real-strange/1789381927?i=1789381928"
+            youtubeUrl="https://youtu.be/Cku5Z-kUX-s?si=h9nteUGlBDCX07sy"
+          />
+          <Song
+            title="Pull Me out of My Head"
+            byline="Written, produced, performed, recorded, and mixed by Paul Harper"
+            spotifyUrl="https://open.spotify.com/track/56hDPnmknpGyJnL4Va723k?si=3224591ceb9346a2"
+            appleMusicUrl="https://music.apple.com/us/album/pull-me-out-of-my-head/1789381927?i=1789381929"
+            youtubeUrl="https://youtu.be/07XjT_NrVF4?si=eGuqYDCQGWelRd03"
+          />
           <Song
             title="Go Your Way"
             byline="Written, produced, performed, recorded, and mixed by Paul Harper"
@@ -66,26 +81,13 @@ export default function Home() {
         </ul>
       </section>
 
-      <section>
-        <h2>Services & Pricing</h2>
+      <section id={styles.reprise}>
+        <h2>Reprise Music Practice</h2>
+        <h3>Coming Soon to the App Store!</h3>
 
-        <p><a href={`mailto:${EMAIL_ADDRESS}`}>Contact me</a> to inquire about
-        my services or if you have any other questions. I&apos;d love to hear from
-        you!</p>
+        <p>Stay motivated, build lasting habits, and turn everyday practice into steady progress. With Reprise, every session brings you closer to mastering your craft.</p>
 
-        <h3>Mixing</h3>
-
-        <p><strong>Special: new clients get first mix free!</strong></p>
-
-        <p>$300 to mix a song. 3 revisions included, more can be negotiated if needed.</p>
-
-        <h3>Mastering</h3>
-
-        <p>$30 to master a song. 3 revisions included, more can be negotiated if needed.</p>
-
-        <h3>Producing & Recording</h3>
-
-        <p><a href={`mailto:${EMAIL_ADDRESS}`}>Contact me</a> for pricing information.</p>
+        <p><a href="/reprise">Learn more &raquo;</a></p>
       </section>
     </>
   );
