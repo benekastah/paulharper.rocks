@@ -52,8 +52,8 @@ export default function Privacy() {
             <p>
             The App uses <strong>Google Firebase Analytics</strong> and <strong>Google Firebase Crashlytics</strong>.
             Data collected by these services is processed in accordance with{' '}
-            <a href="https://policies.google.com/privacy" rel="noopener" target="_blank">Google’s Privacy Policy</a>.
-            You can also find more information on Firebase's <a href="https://firebase.google.com/support/privacy" rel="noopener" target="_blank">Privacy and Security</a> page.
+            <a href="https://policies.google.com/privacy" rel="noopener" target="_blank">Google&apos;s Privacy Policy</a>.
+            You can also find more information on Firebase&apos;s <a href="https://firebase.google.com/support/privacy" rel="noopener" target="_blank">Privacy and Security</a> page.
             </p>
         </section>
 
