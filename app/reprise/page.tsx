@@ -6,11 +6,13 @@ export default function Reprise() {
     return <article id={styles.repriseArticle}>
         <header>
             <div id={styles.repriseLogo}>
-                <img className={styles.light} width={logoSize} height={logoSize} src="/img/logos/reprise-light.png" alt="Reprise Music Practice logo" />
-                <img className={styles.dark} width={logoSize} height={logoSize} src="/img/logos/reprise-dark.png" alt="Reprise Music Practice logo" />
+                <img className={styles.light} width={logoSize} height={logoSize}
+                     src="/img/logos/reprise-light.png" alt="Reprise Music Practice logo" />
+                <img className={styles.dark} width={logoSize} height={logoSize}
+                     src="/img/logos/reprise-dark.png" alt="Reprise Music Practice logo" />
             </div>
             <h1>
-                Reprise
+                Reprise - Coming Soon!
             </h1>
             <p>Published <time dateTime="2025-08-10">Sunday, August 10,
             2025</time>.</p>
@@ -20,11 +22,11 @@ export default function Reprise() {
 
         <div id={styles.repriseScreenshot}>
             <img className={styles.light} width={screenshotWidth} height="auto"
-                src="/img/reprise/1_basic_usage_light.png"
-                alt="A screenshot of Reprise" />
+                 src="/img/reprise/1_basic_usage_light.png"
+                 alt="A screenshot of Reprise" />
             <img className={styles.dark} width={screenshotWidth} height="auto"
-                src="/img/reprise/1_basic_usage_dark.png"
-                alt="A screenshot of Reprise" />
+                 src="/img/reprise/1_basic_usage_dark.png"
+                 alt="A screenshot of Reprise" />
         </div>
 
         <p><center><strong>Don&apos;t just practice. Progress.</strong></center></p>

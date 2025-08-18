@@ -50,7 +50,7 @@ function Song({title, byline, spotifyUrl, appleMusicUrl, youtubeUrl, soundCloudU
 }
 
 
-type Size = {width: Number, height: Number};
+type Size = {width: number, height: number};
 
 const DEFAULT_SIZE: Size = {width: 560, height: 513};
 
