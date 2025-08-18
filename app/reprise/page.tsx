@@ -6,8 +6,8 @@ export default function Reprise() {
     return <article id={styles.repriseArticle}>
         <header>
             <div id={styles.repriseLogo}>
-                <img className={styles.light} width={logoSize} height={logoSize} src="/img/logos/reprise-light.png" />
-                <img className={styles.dark} width={logoSize} height={logoSize} src="/img/logos/reprise-dark.png" />
+                <img className={styles.light} width={logoSize} height={logoSize} src="/img/logos/reprise-light.png" alt="Reprise Music Practice logo" />
+                <img className={styles.dark} width={logoSize} height={logoSize} src="/img/logos/reprise-dark.png" alt="Reprise Music Practice logo" />
             </div>
             <h1>
                 Reprise
