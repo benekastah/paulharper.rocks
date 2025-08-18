@@ -1,3 +1,7 @@
+"use client";
+
+import {useEffect, useState} from 'react';
+
 import styles from "./home.module.css";
 
 const EMAIL_ADDRESS = "paul@paulharper.rocks";
@@ -46,9 +50,34 @@ function Song({title, byline, spotifyUrl, appleMusicUrl, youtubeUrl, soundCloudU
 }
 
 
+type Size = {width: Number, height: Number};
+
+const DEFAULT_SIZE: Size = {width: 560, height: 513};
+
+
 export default function Home() {
+  const [videoSize, setVideoSize] = useState(DEFAULT_SIZE);
+
+  useEffect(() => {
+      var mainEl = document.getElementsByTagName('main')[0];
+      var width = mainEl.offsetWidth;
+      var height = width * (DEFAULT_SIZE.height / DEFAULT_SIZE.width);
+
+      const maxHeight = window.innerHeight - 250;
+      if (height > maxHeight) {
+        height = maxHeight;
+        width = height * (DEFAULT_SIZE.width / DEFAULT_SIZE.height);
+      }
+
+      setVideoSize({width, height});
+  }, [setVideoSize]);
+
   return (
     <>
+      <section id={styles.featuredSong}>
+        <iframe width={videoSize.width} height={videoSize.height} src="https://www.youtube-nocookie.com/embed/Cku5Z-kUX-s?si=RNEaqGqeGaCrabZO" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      </section>
+
       <section id={styles.reel}>
         <h2>Reel</h2>
         <ul className={styles.songs}>
