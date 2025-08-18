@@ -1,1 +1,12 @@
 
+article#privacy h1 {
+    font-size: 32px;
+}
+
+article#privacy h2 {
+    font-size: 24px;
+}
+
+.muted, .muted * {
+    color: rgb(var(--foreground-muted-rgb));
+}

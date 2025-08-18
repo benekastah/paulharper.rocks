@@ -1,10 +1,18 @@
 import styles from "./privacy.module.css";
 
+function HTMLDate({date}: {date: Date}) {
+    var isoDate = date.toISOString().split('T')[0];
+    return <time dateTime={isoDate}>{date.toLocaleDateString()}</time>;
+}
+
 export default function Privacy() {
-    return <article>
+    var effectiveDate = new Date("2025-08-17");
+    var updatedDate = new Date("2025-08-17");
+
+    return <article id={styles.privacy}>
         <header>
             <h1>Privacy Policy for Reprise Music Practice</h1>
-            <p><strong>Effective Date:</strong> <time dateTime="2025-08-16">August 16, 2025</time></p>
+            <p className={styles.muted}><strong>Effective Date:</strong> <HTMLDate date={effectiveDate} /></p>
         </header>
 
         <section>
@@ -60,8 +68,19 @@ export default function Privacy() {
         <section>
             <h2>Your Choices</h2>
             <p>
-            Because analytics and crash reporting are essential to maintaining and improving the App, they are always enabled
-            and cannot be disabled from within the App. If you do not wish this data to be collected, you should uninstall the App.
+                Crash reporting and analytics are <strong>enabled by default</strong> to help us
+                quickly fix bugs and improve the App. However, you can easily disabe this
+                feature at any time from the in-app settings.
+            </p>
+            <p>
+                After changing this setting, you will need to <strong>restart the App</strong> for
+                the change to take full effect. Until the restart, telemetry may continue to be
+                sent. Once restarted, no new diagnostic or usage data will be collected or sent
+                if you have opted out.
+            </p>
+            <p>
+                Previously collected data may still be retained by Google for operational
+                purposes in accordance with their policies.
             </p>
         </section>
 
@@ -91,7 +110,7 @@ export default function Privacy() {
         </section>
 
         <footer>
-            <p>Last updated: <time dateTime="2025-08-16">August 16, 2025</time></p>
+            <p className={styles.muted}>Last updated: <HTMLDate date={updatedDate} /></p>
         </footer>
     </article>
 }
