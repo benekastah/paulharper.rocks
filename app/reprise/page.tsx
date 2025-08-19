@@ -29,7 +29,7 @@ export default function Reprise() {
                  alt="A screenshot of Reprise" />
         </div>
 
-        <p><center><strong>Don&apos;t just practice. Progress.</strong></center></p>
+        <center><strong>Don&apos;t just practice. Progress.</strong></center>
 
         <p>
         Practicing music should feel rewarding. But too often, it&apos;s messy —
@@ -65,5 +65,7 @@ export default function Reprise() {
 
         <p>Reprise will soon be available for iPhone. I built it for myself,
         but I hope it helps you, too.</p>
+
+        <p><small><a href="/reprise/privacy">Privacy policy</a></small></p>
     </article>;
 }

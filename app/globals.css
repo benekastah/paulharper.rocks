@@ -170,6 +170,6 @@ article ul li {
     list-style-position: inside;
 }
 
-article p, ul, ol {
+article p, center, ul, ol {
     margin: 0 0 10px 0;
 }
