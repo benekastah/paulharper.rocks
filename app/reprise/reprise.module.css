@@ -28,18 +28,56 @@
 
 #repriseArticle header {
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.clearBoth {
-    clear: both;
+#repriseArticle h2 {
+    font-size: 20px;
 }
 
 #repriseLogo {
-    float: left;
     margin-right: 10px;
+    display: flex;
+    align-items: stretch;
+    min-width: 10em;
+}
+
+#repriseLogo img {
+    height: 10em;
+    width: 10em;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
 }
 
 #repriseScreenshot {
-    float: right;
-    margin-left: 20px;
+    order: 2;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#repriseScreenshot img {
+    max-width: 200px;
+}
+
+@media (min-width: 875px) {
+    .flex {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    #repriseScreenshot {
+        margin-top: 0;
+        margin-left: 20px;
+        justify-content: flex-start;
+    }
+    #repriseScreenshot img {
+        max-width: 270px;
+    }
 }
