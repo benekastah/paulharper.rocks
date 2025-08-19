@@ -63,7 +63,7 @@ export default function Reprise() {
             </li>
         </ul>
 
-        <p>Reprise is available now for iPhone. I built it for myself, but I
-        hope it helps you, too.</p>
+        <p>Reprise will soon be available for iPhone. I built it for myself,
+        but I hope it helps you, too.</p>
     </article>;
 }
