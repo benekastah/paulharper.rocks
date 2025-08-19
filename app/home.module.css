@@ -2,16 +2,18 @@
     margin: 0 auto;
 }
 
-#reel {
-    float: right;
-    width: 50%;
-    padding-left: 15px;
-}
+@media (min-width: 918px) {
+    #reel {
+        float: right;
+        width: 50%;
+        padding-left: 15px;
+    }
 
-#reprise {
-    float: left;
-    width: 50%;
-    padding-right: 15px;
+    #reprise {
+        float: left;
+        width: 50%;
+        padding-right: 15px;
+    }
 }
 
 ul.songs,
