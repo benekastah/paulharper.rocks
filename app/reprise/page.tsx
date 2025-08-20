@@ -29,23 +29,24 @@ export default function Reprise() {
             <section>
                 <center><strong>Don&apos;t just practice. Progress.</strong></center>
 
+                <p>
+                Practicing music should be rewarding. But too often, it&apos;s
+                a headache. As you juggle different exercises, you can forget
+                what the metronome should be set to or lose track of what you
+                meant to practice. I&apos;ve been there.</p>
 
                 <p>
-                Practicing music should feel rewarding. But too often, it&apos;s messy —
-                juggling different exercises, trying to remember your last tempo, or
-                losing track of what you planned to play. I&apos;ve been there.</p>
+                I&apos;m a guitarist, solo app developer, and dad of two.
+                Between family, work, and music, my practice time is
+                precious. I wanted a tool that would help me make the most of
+                it. Something simple, fast, and good for players at every
+                level.</p>
 
                 <p>
-                I&apos;m a guitarist, solo app developer, and dad of two. Between
-                family, work, and music, my practice time is precious. I wanted a tool
-                that would help me make the most of it — simple, fast, and built for
-                players at every level.</p>
-
-                <p>
-                That&apos;s why I made Reprise. It keeps your routines, tempos, and
-                exercises in one place, so you can focus on playing — not fiddling
-                with settings. Open the app, tap your next exercise, and play.
-                That&apos;s it. With Reprise, you can:</p>
+                That&apos;s why I made Reprise. It keeps your routines, tempos,
+                and exercises in one place, so you can focus on playing — not
+                fiddling with settings. Open the app, tap your next exercise,
+                and play. That&apos;s it. With Reprise, you can:</p>
 
                 <ul>
                     <li>
