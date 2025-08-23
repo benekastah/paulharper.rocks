@@ -59,17 +59,30 @@ export default function Home() {
   const [videoSize, setVideoSize] = useState(DEFAULT_SIZE);
 
   useEffect(() => {
-      var mainEl = document.getElementsByTagName('main')[0];
-      var width = mainEl.offsetWidth;
-      var height = width * (DEFAULT_SIZE.height / DEFAULT_SIZE.width);
+      function resizeVideo() {
+          var mainEl = document.getElementsByTagName('main')[0];
+          var width = mainEl.offsetWidth;
+          var height = width * (DEFAULT_SIZE.height / DEFAULT_SIZE.width);
 
-      const maxHeight = window.innerHeight - 250;
-      if (height > maxHeight) {
-        height = maxHeight;
-        width = height * (DEFAULT_SIZE.width / DEFAULT_SIZE.height);
+          const maxHeight = window.innerHeight - 250;
+          if (height > maxHeight) {
+              height = maxHeight;
+              width = height * (DEFAULT_SIZE.width / DEFAULT_SIZE.height);
+          }
+
+          const minHeight = 300;
+          if (height < minHeight) {
+              height = minHeight;
+              width = height * (DEFAULT_SIZE.width / DEFAULT_SIZE.height);
+          }
+
+          setVideoSize({width, height});
       }
 
-      setVideoSize({width, height});
+      resizeVideo();
+      addEventListener('resize', resizeVideo);
+
+      return () => removeEventListener('resize', resizeVideo);
   }, [setVideoSize]);
 
   return (
